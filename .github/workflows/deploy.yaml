@@ -1,0 +1,10 @@
+name: deploy
+
+on:
+  - workflow_dispatch
+
+jobs:
+  deploy:
+    uses: Byndyusoft/node-reusable-workflows/.github/workflows/deploy.yaml@master
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

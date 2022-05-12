@@ -1,0 +1,109 @@
+{
+  "name": "@byndyusoft/typescript-template",
+  "version": "0.0.0-development",
+  "description": "Base template for TypeScript packages",
+  "homepage": "https://github.com/Byndyusoft/node-typescript-template#readme",
+  "bugs": {
+    "url": "https://github.com/Byndyusoft/node-typescript-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Byndyusoft/node-typescript-template.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Byndyusoft",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "index.ts",
+    "tsconfig.json",
+    "!dist/*.tsbuildinfo",
+    "!**/__tests__",
+    "!**/*spec.ts"
+  ],
+  "scripts": {
+    "prebuild": "shx rm -rf ./dist",
+    "build": "tsc --project ./tsconfig.build.json",
+    "postinstall": "husky install && ts-patch install",
+    "lint": "yarn run lint:eslint && yarn run lint:markdown && yarn run lint:prettier",
+    "lint:eslint": "eslint --ignore-path ./.gitignore --max-warnings 0 --ext .ts,.js .",
+    "lint:eslint:fix": "eslint --ignore-path ./.gitignore --fix --ext .ts,.js .",
+    "lint:fix": "yarn run lint:eslint:fix && yarn run lint:markdown:fix && yarn run lint:prettier:fix",
+    "lint:markdown": "markdownlint --ignore-path ./.gitignore \"./**/*.md\"",
+    "lint:markdown:fix": "markdownlint --ignore-path ./.gitignore --fix \"./**/*.md\"",
+    "lint:prettier": "prettier --ignore-path ./.gitignore --check \"./**/*.{ts,js,json,yaml,yml,md}\"",
+    "lint:prettier:fix": "prettier --ignore-path ./.gitignore --write \"./**/*.{ts,js,json,yaml,yml,md}\"",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable",
+    "test": "jest",
+    "test:cov": "jest --coverage"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "./src/**/*.ts",
+      "!**/__tests__/**/*.ts",
+      "!**/index.ts"
+    ],
+    "coverageDirectory": "<rootDir>/coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "resetMocks": true,
+    "rootDir": "./",
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/test"
+    ],
+    "setupFilesAfterEnv": [
+      "jest-extended/all"
+    ],
+    "testEnvironment": "node",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@byndyusoft/eslint-config": "^1.1.0",
+    "@byndyusoft/tsconfig": "^1.1.0",
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.10",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.7",
+    "jest-extended": "^1.2.0",
+    "lint-staged": "^12.2.2",
+    "markdownlint-cli": "^0.30.0",
+    "pinst": "^2.1.6",
+    "prettier": "^2.5.1",
+    "prettier-plugin-packagejson": "^2.2.15",
+    "semantic-release": "^19.0.2",
+    "shx": "^0.3.4",
+    "ts-jest": "^27.1.3",
+    "ts-patch": "^2.0.1",
+    "typescript": "^4.5.5",
+    "typescript-transform-paths": "^3.3.1"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

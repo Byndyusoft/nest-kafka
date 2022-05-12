@@ -1,0 +1,3 @@
+"*.{ts,js}": eslint
+"*.md": markdownlint
+"*.{ts,js,json,yaml,yml,md}": prettier
