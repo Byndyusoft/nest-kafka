@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./kafkaConsumerEventPatternDecorator";
+export * from "./kafkaHeadersDecorator";
+export * from "./kafkaKeyDecorator";
+export * from "./kafkaValueDecorator";

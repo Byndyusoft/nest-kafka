@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Byndyusoft
+ * Copyright 2022 Byndyusoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,15 @@
  * limitations under the License.
  */
 
-export * from "./src";
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+
+import { IKafkaConsumerPayload } from "../interfaces";
+
+export const KafkaHeaders = createParamDecorator(
+  (property: string | undefined, context: ExecutionContext) => {
+    const rpcHost = context.switchToRpc();
+    const payload: IKafkaConsumerPayload = rpcHost.getData();
+
+    return property ? payload.headers[property] : payload.headers;
+  },
+);

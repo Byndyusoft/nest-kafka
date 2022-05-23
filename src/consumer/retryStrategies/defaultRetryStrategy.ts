@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { AxiosRetryStrategy } from "./axiosRetryStrategy";
+import { NetworkRetryStrategy } from "./networkRetryStrategy";
+
+export class DefaultRetryStrategy {
+  private static readonly __retryStrategies = [
+    NetworkRetryStrategy,
+    AxiosRetryStrategy,
+  ];
+
+  public static isRetriable(error: unknown): boolean {
+    return DefaultRetryStrategy.__retryStrategies.some((x) =>
+      x.isRetriable(error),
+    );
+  }
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Byndyusoft
+ * Copyright 2022 Byndyusoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,4 @@
  * limitations under the License.
  */
 
-import { HelloWorldService } from "~/src";
-
-describe("HelloWorldService", () => {
-  let helloWorldService: HelloWorldService;
-
-  beforeEach(() => {
-    helloWorldService = new HelloWorldService();
-  });
-
-  it("must return hello world message", () => {
-    expect(helloWorldService.getHelloWorldMessage()).toEqualCaseInsensitive(
-      "hello world!",
-    );
-  });
-});
+export const ProducersMapToken = Symbol("ProducersMapToken");

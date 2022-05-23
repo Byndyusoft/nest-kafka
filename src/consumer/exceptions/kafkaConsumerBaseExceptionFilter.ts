@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { Catch, RpcExceptionFilter } from "@nestjs/common";
+import { Observable, throwError } from "rxjs";
+
+import { KafkaConsumerError, KafkaConsumerNonRetriableError } from "../errors";
+
+@Catch()
+export class KafkaConsumerBaseExceptionFilter implements RpcExceptionFilter {
+  public catch(exception: unknown): Observable<unknown> {
+    return throwError(() =>
+      exception instanceof KafkaConsumerError
+        ? exception
+        : new KafkaConsumerNonRetriableError(exception),
+    );
+  }
+}

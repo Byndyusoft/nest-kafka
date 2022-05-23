@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export interface IKafkaConsumerPayloadDecoderOptions {
+  readonly key?: "string" | "json" | "schemaRegistry";
+  readonly value?: "string" | "json" | "schemaRegistry";
+  readonly headers?: "string";
+}

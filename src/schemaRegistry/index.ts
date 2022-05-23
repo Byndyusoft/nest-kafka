@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./decorators";
+export * from "./kafkaSchemaRegistry";
+export * from "./kafkaSchemaRegistryCore";

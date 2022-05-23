@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { Inject } from "@nestjs/common";
+
+import { DefaultConnectionName } from "~/src/consts";
+
+import { kafkaProducerDecoratedProviders } from "./kafkaProducerDecoratedProviders";
+
+export function InjectKafkaProducer(
+  connectionName: string = DefaultConnectionName,
+): ParameterDecorator {
+  return Inject(kafkaProducerDecoratedProviders.getToken(connectionName));
+}

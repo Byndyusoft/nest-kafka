@@ -14,4 +14,12 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./decorators";
+export * from "./errors";
+export * from "./exceptions";
+export * from "./interceptors";
+export * from "./interfaces";
+export * from "./kafkaConsumer";
+export * from "./kafkaConsumerMessageHandler";
+export * from "./kafkaConsumerMessageHandlerLogger";
+export * from "./retryStrategies";

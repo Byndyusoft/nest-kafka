@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { KafkaConsumerError } from "./kafkaConsumerError";
+
+export class KafkaConsumerNonRetriableError extends KafkaConsumerError {
+  public constructor(cause: unknown) {
+    super(KafkaConsumerNonRetriableError.name, {
+      retriable: false,
+      cause,
+    });
+  }
+}

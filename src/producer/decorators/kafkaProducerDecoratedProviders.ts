@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { DecoratedProviders } from "~/src/decoratedProviders";
+
+import { KafkaProducer } from "../kafkaProducer";
+
+export const kafkaProducerDecoratedProviders = new DecoratedProviders(
+  KafkaProducer,
+);

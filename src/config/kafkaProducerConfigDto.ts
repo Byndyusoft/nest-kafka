@@ -14,4 +14,19 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { TransformToBoolean } from "@byndyusoft/class-validator-extended";
+import { IsBoolean, IsOptional } from "class-validator";
+import { ProducerConfig } from "kafkajs";
+
+export class KafkaProducerConfigDto {
+  public static toRawConfig(config: KafkaProducerConfigDto): ProducerConfig {
+    return {
+      allowAutoTopicCreation: config.allowAutoTopicCreation as boolean,
+    };
+  }
+
+  @TransformToBoolean()
+  @IsBoolean()
+  @IsOptional()
+  public readonly allowAutoTopicCreation?: string | boolean;
+}

@@ -14,4 +14,15 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+
+import { IKafkaConsumerPayload } from "../interfaces";
+
+export const KafkaValue = createParamDecorator(
+  (_data: never, context: ExecutionContext) => {
+    const rpcHost = context.switchToRpc();
+    const payload: IKafkaConsumerPayload = rpcHost.getData();
+
+    return payload.value;
+  },
+);
