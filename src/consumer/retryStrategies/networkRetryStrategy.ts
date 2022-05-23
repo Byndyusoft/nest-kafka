@@ -14,4 +14,27 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export class NetworkRetryStrategy {
+  // See https://github.com/FGRibreau/node-request-retry/blob/master/strategies/NetworkError.js
+  private static readonly __retriableCodes = new Set([
+    "ECONNRESET",
+    "ENOTFOUND",
+    "ESOCKETTIMEDOUT",
+    "ETIMEDOUT",
+    "ECONNREFUSED",
+    "EHOSTUNREACH",
+    "EPIPE",
+    "EAI_AGAIN",
+    "EBUSY",
+  ]);
+
+  public static isRetriable(error: unknown): boolean {
+    if (error) {
+      return false;
+    }
+
+    return NetworkRetryStrategy.__retriableCodes.has(
+      (error as { code: string }).code,
+    );
+  }
+}

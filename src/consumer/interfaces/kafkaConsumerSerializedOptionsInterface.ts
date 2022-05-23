@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export interface IKafkaConsumerSerializedOptions {
+  readonly connectionName: string;
+
+  readonly topicPicker: string;
+
+  readonly fromBeginning?: boolean;
+}

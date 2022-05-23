@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { ConsumerConfig, KafkaConfig, ProducerConfig } from "kafkajs";
+
+import { IKafkaSchemaRegistryConnectionDto } from "./kafkaSchemaRegistryConnectionDtoInterface";
+
+export interface IKafkaConnection {
+  readonly name?: string;
+
+  readonly cluster: KafkaConfig;
+
+  readonly consumer?: ConsumerConfig;
+
+  readonly producer?: ProducerConfig;
+
+  readonly schemaRegistry?: IKafkaSchemaRegistryConnectionDto;
+}

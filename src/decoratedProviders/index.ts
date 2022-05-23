@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./decoratedProviderInterface";
+export * from "./decoratedProviders";

@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./kafkaConsumerError";
+export * from "./kafkaConsumerNonRetriableError";
+export * from "./kafkaConsumerRetriableError";

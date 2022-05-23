@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./kafkaConnectionInterface";
+export * from "./kafkaOptionsInterface";
+export * from "./kafkaSchemaRegistryConnectionDtoInterface";

@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export const ConsumersMapToken = Symbol("ConsumersMapToken");

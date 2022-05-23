@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { SchemaRegistryAPIClientOptions } from "@kafkajs/confluent-schema-registry/dist/@types";
+import { SchemaRegistryAPIClientArgs } from "@kafkajs/confluent-schema-registry/dist/api";
+
+export interface IKafkaSchemaRegistryConnectionDto {
+  readonly args: SchemaRegistryAPIClientArgs;
+
+  readonly options?: SchemaRegistryAPIClientOptions;
+}

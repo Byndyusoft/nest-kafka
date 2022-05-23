@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export interface IKafkaConsumerErrorTopicExceptionFilterOptions {
+  readonly connectionName?: string;
+
+  readonly topicPicker: (...args: any[]) => string;
+}

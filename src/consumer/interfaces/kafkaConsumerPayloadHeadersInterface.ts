@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export interface IKafkaConsumerPayloadHeaders {
+  readonly [key: string]: string | string[];
+}

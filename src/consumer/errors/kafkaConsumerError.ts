@@ -14,4 +14,22 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import "error-cause/auto";
+
+export abstract class KafkaConsumerError extends Error {
+  public readonly retriable: boolean;
+
+  protected constructor(
+    message: string,
+    options: {
+      retriable: boolean;
+      cause: unknown;
+    },
+  ) {
+    super(message, {
+      cause: options.cause,
+    });
+
+    this.retriable = options.retriable;
+  }
+}

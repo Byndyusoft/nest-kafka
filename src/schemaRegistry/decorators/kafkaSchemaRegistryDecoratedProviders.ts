@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { DecoratedProviders } from "~/src/decoratedProviders";
+
+import { KafkaSchemaRegistry } from "../kafkaSchemaRegistry";
+
+export const kafkaSchemaRegistryDecoratedProviders = new DecoratedProviders(
+  KafkaSchemaRegistry,
+);

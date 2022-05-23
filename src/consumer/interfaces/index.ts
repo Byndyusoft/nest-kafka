@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./kafkaConsumerContextInterface";
+export * from "./kafkaConsumerErrorTopicExceptionFilterOptionsInterface";
+export * from "./kafkaConsumerOptionsInterface";
+export * from "./kafkaConsumerPayloadDecoderOptionsInterface";
+export * from "./kafkaConsumerPayloadHeadersInterface";
+export * from "./kafkaConsumerPayloadInterface";
+export * from "./kafkaConsumerSerializedOptionsInterface";

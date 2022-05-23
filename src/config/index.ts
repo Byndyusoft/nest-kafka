@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./kafkaClusterConfigDto";
+export * from "./kafkaConsumerConfigDto";
+export * from "./kafkaProducerConfigDto";
+export * from "./kafkaSchemaRegistryArgsConfigDto";

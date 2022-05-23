@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+import { EachMessagePayload } from "kafkajs";
+
+import { IKafkaConsumerPayloadHeaders } from "./kafkaConsumerPayloadHeadersInterface";
+
+export interface IKafkaConsumerPayload<
+  TKey = unknown,
+  TValue = unknown,
+  THeaders = IKafkaConsumerPayloadHeaders,
+> {
+  key: TKey;
+  value: TValue;
+  headers: THeaders;
+
+  readonly rawPayload: EachMessagePayload;
+}

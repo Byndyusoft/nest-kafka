@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+export * from "./injectKafkaProducerDecorator";
+export * from "./kafkaProducerDecoratedProviders";

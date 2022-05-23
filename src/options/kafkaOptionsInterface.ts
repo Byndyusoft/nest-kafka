@@ -14,4 +14,16 @@
  * limitations under the License.
  */
 
-import "jest-extended";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { WrapOptions } from "retry";
+
+import { IKafkaConnection } from "./kafkaConnectionInterface";
+
+export interface IKafkaOptions {
+  readonly connections: IKafkaConnection[];
+
+  readonly topicPickerArgs: any[];
+
+  readonly consumerRetryOptions?: WrapOptions;
+}
