@@ -16,4 +16,4 @@
 
 export * from "./kafkaConnectionInterface";
 export * from "./kafkaOptionsInterface";
-export * from "./kafkaSchemaRegistryConnectionDtoInterface";
+export * from "./kafkaSchemaRegistryConnectionInterface";
