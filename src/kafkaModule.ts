@@ -43,8 +43,8 @@ import {
   kafkaProducerDecoratedProviders,
 } from "./producer";
 import {
+  KafkaCoreSchemaRegistry,
   KafkaSchemaRegistry,
-  KafkaSchemaRegistryCore,
   kafkaSchemaRegistryDecoratedProviders,
 } from "./schemaRegistry";
 
@@ -58,9 +58,9 @@ export class KafkaModule {
       KafkaConsumerMessageHandler,
       KafkaConsumerMessageHandlerLogger,
       KafkaCoreProducer,
+      KafkaCoreSchemaRegistry,
       KafkaProducer,
       KafkaSchemaRegistry,
-      KafkaSchemaRegistryCore,
       ...kafkaProducerDecoratedProviders.createProviders(),
       ...kafkaSchemaRegistryDecoratedProviders.createProviders(),
     ];

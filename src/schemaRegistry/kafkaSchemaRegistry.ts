@@ -19,14 +19,14 @@ import { Injectable, Scope } from "@nestjs/common";
 
 import { IDecoratedProvider } from "~/src/decoratedProviders";
 
-import { KafkaSchemaRegistryCore } from "./kafkaSchemaRegistryCore";
+import { KafkaCoreSchemaRegistry } from "./kafkaCoreSchemaRegistry";
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class KafkaSchemaRegistry implements IDecoratedProvider {
   private __connectionName?: string;
 
   public constructor(
-    private readonly __kafkaSchemaRegistryCore: KafkaSchemaRegistryCore,
+    private readonly __kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
   ) {}
 
   public get connectionName(): string {
@@ -46,19 +46,19 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
   public decode(
     ...args: Parameters<SchemaRegistry["decode"]>
   ): ReturnType<SchemaRegistry["decode"]> {
-    return this.__kafkaSchemaRegistryCore.decode(this.connectionName, ...args);
+    return this.__kafkaCoreSchemaRegistry.decode(this.connectionName, ...args);
   }
 
   public encode(
     ...args: Parameters<SchemaRegistry["encode"]>
   ): ReturnType<SchemaRegistry["encode"]> {
-    return this.__kafkaSchemaRegistryCore.encode(this.connectionName, ...args);
+    return this.__kafkaCoreSchemaRegistry.encode(this.connectionName, ...args);
   }
 
   public getLatestSchemaId(
     ...args: Parameters<SchemaRegistry["getLatestSchemaId"]>
   ): ReturnType<SchemaRegistry["getLatestSchemaId"]> {
-    return this.__kafkaSchemaRegistryCore.getLatestSchemaId(
+    return this.__kafkaCoreSchemaRegistry.getLatestSchemaId(
       this.connectionName,
       ...args,
     );
@@ -67,7 +67,7 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
   public getSchema(
     ...args: Parameters<SchemaRegistry["getSchema"]>
   ): ReturnType<SchemaRegistry["getSchema"]> {
-    return this.__kafkaSchemaRegistryCore.getSchema(
+    return this.__kafkaCoreSchemaRegistry.getSchema(
       this.connectionName,
       ...args,
     );

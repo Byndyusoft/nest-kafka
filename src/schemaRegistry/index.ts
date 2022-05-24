@@ -15,5 +15,5 @@
  */
 
 export * from "./decorators";
+export * from "./kafkaCoreSchemaRegistry";
 export * from "./kafkaSchemaRegistry";
-export * from "./kafkaSchemaRegistryCore";
