@@ -29,7 +29,7 @@ export class NetworkRetryStrategy {
   ]);
 
   public static isRetriable(error: unknown): boolean {
-    if (error) {
+    if (!error) {
       return false;
     }
 
