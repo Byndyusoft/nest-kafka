@@ -16,7 +16,7 @@
 
 import { ConsumerConfig, KafkaConfig, ProducerConfig } from "kafkajs";
 
-import { IKafkaSchemaRegistryConnectionDto } from "./kafkaSchemaRegistryConnectionDtoInterface";
+import { IKafkaSchemaRegistryConnection } from "./kafkaSchemaRegistryConnectionInterface";
 
 export interface IKafkaConnection {
   readonly name?: string;
@@ -27,5 +27,5 @@ export interface IKafkaConnection {
 
   readonly producer?: ProducerConfig;
 
-  readonly schemaRegistry?: IKafkaSchemaRegistryConnectionDto;
+  readonly schemaRegistry?: IKafkaSchemaRegistryConnection;
 }

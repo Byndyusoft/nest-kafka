@@ -17,7 +17,7 @@
 import { SchemaRegistryAPIClientOptions } from "@kafkajs/confluent-schema-registry/dist/@types";
 import { SchemaRegistryAPIClientArgs } from "@kafkajs/confluent-schema-registry/dist/api";
 
-export interface IKafkaSchemaRegistryConnectionDto {
+export interface IKafkaSchemaRegistryConnection {
   readonly args: SchemaRegistryAPIClientArgs;
 
   readonly options?: SchemaRegistryAPIClientOptions;
