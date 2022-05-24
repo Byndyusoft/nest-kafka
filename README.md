@@ -15,7 +15,7 @@ Kafka for NestJS
 - Consumer
   - Subscribe topic is not static, you can pick it from config
   - Process message in async context with [Tracing](https://www.npmjs.com/package/@byndyusoft/nest-opentracing) and [Logging](https://www.npmjs.com/package/nestjs-pino)
-  - String, JSON and Schema Registry decoders for key, value and headers
+  - String, JSON and Schema Registry decoders for key and value, headers decoder with array support
   - [Dead letter queue](https://www.confluent.io/blog/error-handling-patterns-in-kafka/#pattern-2) pattern support with smart retry mechanism
   - Support custom decoders and error handling patterns
 
