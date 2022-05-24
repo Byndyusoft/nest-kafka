@@ -16,7 +16,7 @@
 
 import { IKafkaOptions } from "~/src/options";
 import { KafkaCoreProducer } from "~/src/producer";
-import { KafkaSchemaRegistryCore } from "~/src/schemaRegistry";
+import { KafkaCoreSchemaRegistry } from "~/src/schemaRegistry";
 
 import { KafkaConsumerMessageHandlerLogger } from "../kafkaConsumerMessageHandlerLogger";
 
@@ -25,7 +25,7 @@ export interface IKafkaConsumerContext {
   readonly kafkaOptions: IKafkaOptions;
 
   readonly kafkaCoreProducer: KafkaCoreProducer;
-  readonly kafkaSchemaRegistryCore: KafkaSchemaRegistryCore;
+  readonly kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry;
 
   readonly kafkaConsumerMessageHandlerLogger: KafkaConsumerMessageHandlerLogger;
 

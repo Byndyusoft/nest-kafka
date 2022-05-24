@@ -20,7 +20,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { SchemaRegistriesMapToken } from "~/src/consts";
 
 @Injectable()
-export class KafkaSchemaRegistryCore {
+export class KafkaCoreSchemaRegistry {
   public constructor(
     @Inject(SchemaRegistriesMapToken)
     private readonly __schemaRegistriesMap: Map<string, SchemaRegistry>,

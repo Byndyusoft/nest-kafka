@@ -58,7 +58,7 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
   }
 
   private static async __decodeKeyOrValue(
-    { connectionName, kafkaSchemaRegistryCore }: IKafkaConsumerContext,
+    { connectionName, kafkaCoreSchemaRegistry }: IKafkaConsumerContext,
     data: Buffer | null,
     decoder?: "string" | "json" | "schemaRegistry",
   ): Promise<unknown | undefined> {
@@ -72,7 +72,7 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
       case "json":
         return JSON.parse(data.toString()) as unknown;
       case "schemaRegistry":
-        return kafkaSchemaRegistryCore.decode(connectionName, data);
+        return kafkaCoreSchemaRegistry.decode(connectionName, data);
     }
   }
 
