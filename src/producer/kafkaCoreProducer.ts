@@ -25,7 +25,7 @@ import { Producer } from "kafkajs";
 import { ProducersMapToken } from "~/src/consts";
 
 @Injectable()
-export class KafkaProducerCore implements OnModuleInit, OnModuleDestroy {
+export class KafkaCoreProducer implements OnModuleInit, OnModuleDestroy {
   public constructor(
     @Inject(ProducersMapToken)
     private readonly __producersMap: Map<string, Producer>,

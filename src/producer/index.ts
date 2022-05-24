@@ -15,5 +15,5 @@
  */
 
 export * from "./decorators";
+export * from "./kafkaCoreProducer";
 export * from "./kafkaProducer";
-export * from "./kafkaProducerCore";
