@@ -26,11 +26,11 @@ import {
 } from "class-validator";
 import { KafkaConfig } from "kafkajs";
 
-type TSupportedSaslMechanisms = "plain" | "scram-sha-256" | "scram-sha-512";
+type TSupportedSaslMechanism = "plain" | "scram-sha-256" | "scram-sha-512";
 
-interface ITransformedKafkaClusterConfigDto {
+interface ITransformedKafkaClusterConfig {
   readonly brokers: string[];
-  readonly saslMechanism?: TSupportedSaslMechanisms;
+  readonly saslMechanism?: TSupportedSaslMechanism;
   readonly username?: string;
   readonly password?: string;
   readonly ssl?: boolean;
@@ -40,7 +40,7 @@ interface ITransformedKafkaClusterConfigDto {
 export class KafkaClusterConfigDto {
   public static toRawConfig(config: KafkaClusterConfigDto): KafkaConfig {
     const transformedConfig =
-      config as unknown as ITransformedKafkaClusterConfigDto;
+      config as unknown as ITransformedKafkaClusterConfig;
 
     const { brokers } = transformedConfig;
 
@@ -54,7 +54,7 @@ export class KafkaClusterConfigDto {
   private static __getKafkaSslConfig({
     ssl,
     ca,
-  }: ITransformedKafkaClusterConfigDto): Pick<KafkaConfig, "ssl"> {
+  }: ITransformedKafkaClusterConfig): Pick<KafkaConfig, "ssl"> {
     if (!ssl && !ca) {
       return {
         ssl: false,
@@ -80,7 +80,7 @@ export class KafkaClusterConfigDto {
     saslMechanism,
     username,
     password,
-  }: ITransformedKafkaClusterConfigDto): Pick<KafkaConfig, "sasl"> {
+  }: ITransformedKafkaClusterConfig): Pick<KafkaConfig, "sasl"> {
     return !saslMechanism || !username || !password
       ? {}
       : {
@@ -102,7 +102,7 @@ export class KafkaClusterConfigDto {
 
   @IsIn(["plain", "scram-sha-256", "scram-sha-512"])
   @IsOptional()
-  public readonly saslMechanism?: string | TSupportedSaslMechanisms;
+  public readonly saslMechanism?: string | TSupportedSaslMechanism;
 
   @IsString()
   @IsOptional()
