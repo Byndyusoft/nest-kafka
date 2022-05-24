@@ -101,7 +101,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     this.__logger.warn(warnMessage);
 
-    await context.kafkaProducerCore.send(connectionName, {
+    await context.kafkaCoreProducer.send(connectionName, {
       topic,
       messages: [
         {

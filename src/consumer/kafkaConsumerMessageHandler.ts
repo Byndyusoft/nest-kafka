@@ -26,7 +26,7 @@ import { isObservable, lastValueFrom } from "rxjs";
 
 import { KafkaOptionsToken } from "~/src/consts";
 import { IKafkaOptions } from "~/src/options";
-import { KafkaProducerCore } from "~/src/producer";
+import { KafkaCoreProducer } from "~/src/producer";
 import { KafkaSchemaRegistryCore } from "~/src/schemaRegistry";
 
 import { KafkaConsumerError } from "./errors";
@@ -47,9 +47,9 @@ export class KafkaConsumerMessageHandler {
 
   public constructor(
     private readonly __kafkaConsumerMessageHandlerLogger: KafkaConsumerMessageHandlerLogger,
+    private readonly __kafkaCoreProducer: KafkaCoreProducer,
     @Inject(KafkaOptionsToken)
     private readonly __kafkaOptions: IKafkaOptions,
-    private readonly __kafkaProducerCore: KafkaProducerCore,
     private readonly __kafkaSchemaRegistryCore: KafkaSchemaRegistryCore,
     private readonly __logger: PinoLogger,
     private readonly __tracingAsyncContext: TracingAsyncContext,
@@ -160,7 +160,7 @@ export class KafkaConsumerMessageHandler {
       const context: IKafkaConsumerContext = {
         connectionName,
         kafkaOptions: this.__kafkaOptions,
-        kafkaProducerCore: this.__kafkaProducerCore,
+        kafkaCoreProducer: this.__kafkaCoreProducer,
         kafkaSchemaRegistryCore: this.__kafkaSchemaRegistryCore,
         kafkaConsumerMessageHandlerLogger:
           this.__kafkaConsumerMessageHandlerLogger,

@@ -19,13 +19,13 @@ import { Producer } from "kafkajs";
 
 import { IDecoratedProvider } from "~/src/decoratedProviders";
 
-import { KafkaProducerCore } from "./kafkaProducerCore";
+import { KafkaCoreProducer } from "./kafkaCoreProducer";
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class KafkaProducer implements IDecoratedProvider {
   private __connectionName?: string;
 
-  public constructor(private readonly __kafkaProducerCore: KafkaProducerCore) {}
+  public constructor(private readonly __kafkaCoreProducer: KafkaCoreProducer) {}
 
   public get connectionName(): string {
     if (!this.__connectionName) {
@@ -42,12 +42,12 @@ export class KafkaProducer implements IDecoratedProvider {
   public send(
     ...args: Parameters<Producer["send"]>
   ): ReturnType<Producer["send"]> {
-    return this.__kafkaProducerCore.send(this.connectionName, ...args);
+    return this.__kafkaCoreProducer.send(this.connectionName, ...args);
   }
 
   public sendBatch(
     ...args: Parameters<Producer["sendBatch"]>
   ): ReturnType<Producer["sendBatch"]> {
-    return this.__kafkaProducerCore.sendBatch(this.connectionName, ...args);
+    return this.__kafkaCoreProducer.sendBatch(this.connectionName, ...args);
   }
 }

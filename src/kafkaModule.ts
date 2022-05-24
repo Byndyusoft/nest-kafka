@@ -38,8 +38,8 @@ import {
 } from "./consumer";
 import { IKafkaOptions } from "./options";
 import {
+  KafkaCoreProducer,
   KafkaProducer,
-  KafkaProducerCore,
   kafkaProducerDecoratedProviders,
 } from "./producer";
 import {
@@ -57,8 +57,8 @@ export class KafkaModule {
       KafkaConsumer,
       KafkaConsumerMessageHandler,
       KafkaConsumerMessageHandlerLogger,
+      KafkaCoreProducer,
       KafkaProducer,
-      KafkaProducerCore,
       KafkaSchemaRegistry,
       KafkaSchemaRegistryCore,
       ...kafkaProducerDecoratedProviders.createProviders(),
