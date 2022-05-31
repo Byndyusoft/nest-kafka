@@ -108,7 +108,6 @@ export class KafkaConsumerErrorTopicExceptionFilter
           key: payload.rawPayload.message.key,
           value: payload.rawPayload.message.value,
           headers: payload.rawPayload.message.headers,
-          timestamp: payload.rawPayload.message.timestamp,
         },
       ],
     });
