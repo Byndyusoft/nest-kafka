@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export * from "./getCauseError";
-export * from "./kafkaConsumerError";
-export * from "./kafkaConsumerNonRetriableError";
-export * from "./kafkaConsumerRetriableError";
-export * from "./serializeError";
+import { KafkaConsumerError } from "./kafkaConsumerError";
+
+export function getCauseError(error: unknown): Error {
+  return (error instanceof KafkaConsumerError ? error.cause : error) as Error;
+}
