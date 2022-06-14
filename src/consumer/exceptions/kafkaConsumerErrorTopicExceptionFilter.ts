@@ -23,9 +23,11 @@ import {
 import { from, Observable, throwError } from "rxjs";
 
 import {
+  getCauseError,
   KafkaConsumerError,
   KafkaConsumerNonRetriableError,
   KafkaConsumerRetriableError,
+  serializeError,
 } from "../errors";
 import {
   IKafkaConsumerContext,
@@ -80,27 +82,29 @@ export class KafkaConsumerErrorTopicExceptionFilter
     context.kafkaConsumerMessageHandlerLogger.error(this.__logger, exception);
 
     return from(
-      this.__sendMessageToOtherTopic(
+      this.__sendMessageToErrorTopic(
+        kafkaConsumerError,
         host,
         this.__options.connectionName ?? context.connectionName,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         this.__options.topicPicker(...context.kafkaOptions.topicPickerArgs),
-        "Send message to error topic",
       ),
     );
   }
 
-  private async __sendMessageToOtherTopic(
+  private async __sendMessageToErrorTopic(
+    kafkaConsumerError: KafkaConsumerError,
     host: ArgumentsHost,
     connectionName: string,
     topic: string,
-    warnMessage: string,
   ): Promise<void> {
     const rpcHost = host.switchToRpc();
     const payload: IKafkaConsumerPayload = rpcHost.getData();
     const context: IKafkaConsumerContext = rpcHost.getContext();
 
-    this.__logger.warn(warnMessage);
+    const cause = getCauseError(kafkaConsumerError);
+
+    this.__logger.warn("Send message to error topic");
 
     await context.kafkaCoreProducer.send(connectionName, {
       topic,
@@ -108,7 +112,14 @@ export class KafkaConsumerErrorTopicExceptionFilter
         {
           key: payload.rawPayload.message.key,
           value: payload.rawPayload.message.value,
-          headers: payload.rawPayload.message.headers,
+          headers: {
+            ...payload.rawPayload.message.headers,
+            originalTopic: payload.rawPayload.topic,
+            originalPartition: String(payload.rawPayload.partition),
+            originalOffset: payload.rawPayload.message.offset,
+            originalTimestamp: payload.rawPayload.message.timestamp,
+            error: JSON.stringify(serializeError(cause)),
+          },
         },
       ],
     });

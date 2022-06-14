@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-export * from "./getCauseError";
-export * from "./kafkaConsumerError";
-export * from "./kafkaConsumerNonRetriableError";
-export * from "./kafkaConsumerRetriableError";
-export * from "./serializeError";
+export function serializeError(error: Error): Record<string, unknown> {
+  return {
+    message: error.message,
+    stack: error.stack,
+  };
+}

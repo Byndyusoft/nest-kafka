@@ -18,7 +18,7 @@ import { Tags, TracingService } from "@byndyusoft/nest-opentracing";
 import { Injectable, LoggerService } from "@nestjs/common";
 import { PinoLogger } from "nestjs-pino";
 
-import { KafkaConsumerError } from "./errors";
+import { getCauseError, serializeError } from "./errors";
 
 @Injectable()
 export class KafkaConsumerMessageHandlerLogger {
@@ -27,9 +27,7 @@ export class KafkaConsumerMessageHandlerLogger {
   public error(logger: LoggerService | PinoLogger, error: unknown): void {
     const rootSpan = this.__tracingService.getRootSpan();
 
-    const cause = (
-      error instanceof KafkaConsumerError ? error.cause : error
-    ) as Error;
+    const cause = getCauseError(error);
 
     logger.error(cause);
 
@@ -38,8 +36,7 @@ export class KafkaConsumerMessageHandlerLogger {
 
     rootSpan.log({
       event: "error",
-      message: cause.message,
-      stack: cause.stack,
+      ...serializeError(cause),
     });
   }
 }
