@@ -128,7 +128,7 @@ export class KafkaConsumerMessageHandler {
         });
 
         loggerStorage.run(new Store(rawLogger), () => {
-          // eslint-disable-next-line node/callback-return
+          // eslint-disable-next-line n/callback-return
           callback().then(resolve).catch(reject);
         });
       });

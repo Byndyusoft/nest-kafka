@@ -83,6 +83,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
       this.__sendMessageToOtherTopic(
         host,
         this.__options.connectionName ?? context.connectionName,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         this.__options.topicPicker(...context.kafkaOptions.topicPickerArgs),
         "Send message to error topic",
       ),
