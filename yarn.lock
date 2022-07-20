@@ -5388,10 +5388,10 @@ nerf-dart@^1.0.0:
   resolved "https://registry.yarnpkg.com/nerf-dart/-/nerf-dart-1.0.0.tgz#e6dab7febf5ad816ea81cf5c629c5a0ebde72c1a"
   integrity sha512-EZSPZB70jiVsivaBLYDCyntd5eH8NTSMOn3rB+HxwdmKThGELLdYv8qVIMWvZEFy9w8ZZpW9h9OB32l1rGtj7g==
 
-nestjs-pino@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/nestjs-pino/-/nestjs-pino-2.6.0.tgz#bb70c87acc325baf265521a8b1f1b7a7b46d22fd"
-  integrity sha512-sudCZ5wTjXf4L2iL1G1eh5PL15S5ADtjaW8bnNlg02ZKB81ySdSa0CJ4gMhB3UlGLWS80JoZVp+R3jeRizoJYA==
+nestjs-pino@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/nestjs-pino/-/nestjs-pino-3.1.0.tgz#67e3d635fc4588583b21638b82d5912fa37b7f17"
+  integrity sha512-JH/r/MLjV9KT916mX0nVO6kUOKiAKgFTuA3vHYB2oiP9m5VUXZvvnuBV5TiXZaCa7NwH/oJr4Ak2rUn15qZbgQ==
 
 node-emoji@^1.11.0:
   version "1.11.0"
