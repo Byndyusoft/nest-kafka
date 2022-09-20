@@ -29,7 +29,7 @@ import { IKafkaOptions } from "~/src/options";
 import { KafkaCoreProducer } from "~/src/producer";
 import { KafkaCoreSchemaRegistry } from "~/src/schemaRegistry";
 
-import { getCauseError, KafkaConsumerError } from "./errors";
+import { getErrorCause, KafkaConsumerError } from "./errors";
 import { IKafkaConsumerContext, IKafkaConsumerPayload } from "./interfaces";
 import { KafkaConsumerMessageHandlerLogger } from "./kafkaConsumerMessageHandlerLogger";
 
@@ -90,7 +90,7 @@ export class KafkaConsumerMessageHandler {
             }
 
             operation.stop();
-            reject(getCauseError(error));
+            reject(getErrorCause(error));
           });
       });
     });
