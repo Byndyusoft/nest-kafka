@@ -16,6 +16,6 @@
 
 import { KafkaConsumerError } from "./kafkaConsumerError";
 
-export function getCauseError(error: unknown): Error {
+export function getErrorCause(error: unknown): Error {
   return (error instanceof KafkaConsumerError ? error.cause : error) as Error;
 }

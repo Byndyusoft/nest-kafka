@@ -23,7 +23,7 @@ import {
 import { from, Observable, throwError } from "rxjs";
 
 import {
-  getCauseError,
+  getErrorCause,
   KafkaConsumerError,
   KafkaConsumerNonRetriableError,
   KafkaConsumerRetriableError,
@@ -102,7 +102,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
     const payload: IKafkaConsumerPayload = rpcHost.getData();
     const context: IKafkaConsumerContext = rpcHost.getContext();
 
-    const cause = getCauseError(kafkaConsumerError);
+    const cause = getErrorCause(kafkaConsumerError);
 
     this.__logger.warn("Send message to error topic");
 

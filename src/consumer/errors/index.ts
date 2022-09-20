@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export * from "./getCauseError";
+export * from "./getErrorCause";
 export * from "./kafkaConsumerError";
 export * from "./kafkaConsumerNonRetriableError";
 export * from "./kafkaConsumerRetriableError";
