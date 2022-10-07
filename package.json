@@ -78,7 +78,7 @@
     "@byndyusoft/nest-dynamic-module": "^1.0.0",
     "@types/error-cause": "^1.0.1",
     "@types/retry": "^0.12.2",
-    "axios": "^0.27.2",
+    "axios": "^1.1.2",
     "error-cause": "^1.0.4",
     "lodash": "^4.17.21",
     "retry": "^0.13.1",
