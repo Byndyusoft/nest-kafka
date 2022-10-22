@@ -46,12 +46,12 @@ export class KafkaClusterConfigDto {
 
     return {
       brokers,
-      ...this.__getKafkaSslConfig(transformedConfig),
-      ...this.__getKafkaSaslConfig(transformedConfig),
+      ...this.getKafkaSslConfig(transformedConfig),
+      ...this.getKafkaSaslConfig(transformedConfig),
     };
   }
 
-  private static __getKafkaSslConfig({
+  private static getKafkaSslConfig({
     ssl,
     ca,
   }: ITransformedKafkaClusterConfig): Pick<KafkaConfig, "ssl"> {
@@ -76,7 +76,7 @@ export class KafkaClusterConfigDto {
     };
   }
 
-  private static __getKafkaSaslConfig({
+  private static getKafkaSaslConfig({
     saslMechanism,
     username,
     password,
@@ -85,7 +85,7 @@ export class KafkaClusterConfigDto {
       ? {}
       : {
           sasl: {
-            mechanism: saslMechanism,
+            mechanism: saslMechanism as "plain",
             username,
             password,
           },

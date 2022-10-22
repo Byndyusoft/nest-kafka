@@ -35,7 +35,11 @@ import { KafkaConsumerMessageHandlerLogger } from "./kafkaConsumerMessageHandler
 
 interface IProcessMessageOptions {
   readonly connectionName: string;
-  readonly messageHandler: MessageHandler;
+  readonly messageHandler: MessageHandler<
+    IKafkaConsumerPayload,
+    IKafkaConsumerContext,
+    unknown
+  >;
   readonly rawPayload: EachMessagePayload;
   readonly currentAttempt: number;
   readonly isFinalAttempt: boolean;
@@ -43,22 +47,22 @@ interface IProcessMessageOptions {
 
 @Injectable()
 export class KafkaConsumerMessageHandler {
-  private readonly __totalAttempts: number;
+  private readonly totalAttempts: number;
 
   public constructor(
-    private readonly __kafkaConsumerMessageHandlerLogger: KafkaConsumerMessageHandlerLogger,
-    private readonly __kafkaCoreProducer: KafkaCoreProducer,
-    private readonly __kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
+    private readonly kafkaConsumerMessageHandlerLogger: KafkaConsumerMessageHandlerLogger,
+    private readonly kafkaCoreProducer: KafkaCoreProducer,
+    private readonly kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
     @Inject(KafkaOptionsToken)
-    private readonly __kafkaOptions: IKafkaOptions,
-    private readonly __logger: PinoLogger,
-    private readonly __tracingAsyncContext: TracingAsyncContext,
-    private readonly __tracingService: TracingService,
+    private readonly kafkaOptions: IKafkaOptions,
+    private readonly logger: PinoLogger,
+    private readonly tracingAsyncContext: TracingAsyncContext,
+    private readonly tracingService: TracingService,
   ) {
-    this.__logger.setContext(KafkaConsumerMessageHandler.name);
+    this.logger.setContext(KafkaConsumerMessageHandler.name);
 
-    this.__totalAttempts =
-      (this.__kafkaOptions.consumerRetryOptions?.retries ?? 10) + 1;
+    this.totalAttempts =
+      (this.kafkaOptions.consumerRetryOptions?.retries ?? 10) + 1;
   }
 
   public handleMessage(
@@ -67,17 +71,15 @@ export class KafkaConsumerMessageHandler {
     rawPayload: EachMessagePayload,
   ): Promise<void> {
     return new Promise((resolve, reject) => {
-      const operation = retry.operation(
-        this.__kafkaOptions.consumerRetryOptions,
-      );
+      const operation = retry.operation(this.kafkaOptions.consumerRetryOptions);
 
       operation.attempt((currentAttempt) => {
-        this.__processMessage({
+        this.processMessage({
           connectionName,
           messageHandler,
           rawPayload,
           currentAttempt,
-          isFinalAttempt: currentAttempt === this.__totalAttempts,
+          isFinalAttempt: currentAttempt === this.totalAttempts,
         })
           .then(resolve)
           .catch((error) => {
@@ -96,7 +98,7 @@ export class KafkaConsumerMessageHandler {
     });
   }
 
-  private __prepareAsyncContext(
+  private prepareAsyncContext(
     {
       connectionName,
       rawPayload,
@@ -106,8 +108,8 @@ export class KafkaConsumerMessageHandler {
     callback: () => Promise<void>,
   ): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.__tracingAsyncContext.run(() => {
-        const rootSpan = this.__tracingService.initRootSpan(
+      this.tracingAsyncContext.run(() => {
+        const rootSpan = this.tracingService.initRootSpan(
           `${rawPayload.topic} [${connectionName}]`,
         );
 
@@ -122,7 +124,7 @@ export class KafkaConsumerMessageHandler {
 
         rootSpan.addTags(tags);
 
-        const rawLogger = this.__logger.logger.child({
+        const rawLogger = this.logger.logger.child({
           ...tags,
           traceId: rootSpan.context().toTraceId(),
         });
@@ -135,19 +137,19 @@ export class KafkaConsumerMessageHandler {
     });
   }
 
-  private __processMessage(options: IProcessMessageOptions): Promise<void> {
-    return this.__prepareAsyncContext(options, () =>
-      this.__processMessageInAsyncContext(options),
+  private processMessage(options: IProcessMessageOptions): Promise<void> {
+    return this.prepareAsyncContext(options, () =>
+      this.processMessageInAsyncContext(options),
     );
   }
 
-  private async __processMessageInAsyncContext({
+  private async processMessageInAsyncContext({
     connectionName,
     messageHandler,
     rawPayload,
     isFinalAttempt,
   }: IProcessMessageOptions): Promise<void> {
-    const rootSpan = this.__tracingService.getRootSpan();
+    const rootSpan = this.tracingService.getRootSpan();
 
     try {
       const payload: IKafkaConsumerPayload = {
@@ -159,11 +161,11 @@ export class KafkaConsumerMessageHandler {
 
       const context: IKafkaConsumerContext = {
         connectionName,
-        kafkaOptions: this.__kafkaOptions,
-        kafkaCoreProducer: this.__kafkaCoreProducer,
-        kafkaCoreSchemaRegistry: this.__kafkaCoreSchemaRegistry,
+        kafkaOptions: this.kafkaOptions,
+        kafkaCoreProducer: this.kafkaCoreProducer,
+        kafkaCoreSchemaRegistry: this.kafkaCoreSchemaRegistry,
         kafkaConsumerMessageHandlerLogger:
-          this.__kafkaConsumerMessageHandlerLogger,
+          this.kafkaConsumerMessageHandlerLogger,
         isFinalAttempt,
       };
 
@@ -173,7 +175,7 @@ export class KafkaConsumerMessageHandler {
         await lastValueFrom(resultOrStream);
       }
     } catch (error) {
-      this.__kafkaConsumerMessageHandlerLogger.error(this.__logger, error);
+      this.kafkaConsumerMessageHandlerLogger.error(this.logger, error);
 
       throw error;
     } finally {

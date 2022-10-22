@@ -23,39 +23,39 @@ import { SchemaRegistriesMapToken } from "~/src/consts";
 export class KafkaCoreSchemaRegistry {
   public constructor(
     @Inject(SchemaRegistriesMapToken)
-    private readonly __schemaRegistriesMap: Map<string, SchemaRegistry>,
+    private readonly schemaRegistriesMap: Map<string, SchemaRegistry>,
   ) {}
 
   public decode(
     connectionName: string,
     ...args: Parameters<SchemaRegistry["decode"]>
   ): ReturnType<SchemaRegistry["decode"]> {
-    return this.__getSchemaRegistry(connectionName).decode(...args);
+    return this.getSchemaRegistry(connectionName).decode(...args);
   }
 
   public encode(
     connectionName: string,
     ...args: Parameters<SchemaRegistry["encode"]>
   ): ReturnType<SchemaRegistry["encode"]> {
-    return this.__getSchemaRegistry(connectionName).encode(...args);
+    return this.getSchemaRegistry(connectionName).encode(...args);
   }
 
   public getLatestSchemaId(
     connectionName: string,
     ...args: Parameters<SchemaRegistry["getLatestSchemaId"]>
   ): ReturnType<SchemaRegistry["getLatestSchemaId"]> {
-    return this.__getSchemaRegistry(connectionName).getLatestSchemaId(...args);
+    return this.getSchemaRegistry(connectionName).getLatestSchemaId(...args);
   }
 
   public getSchema(
     connectionName: string,
     ...args: Parameters<SchemaRegistry["getSchema"]>
   ): ReturnType<SchemaRegistry["getSchema"]> {
-    return this.__getSchemaRegistry(connectionName).getSchema(...args);
+    return this.getSchemaRegistry(connectionName).getSchema(...args);
   }
 
-  private __getSchemaRegistry(connectionName: string): SchemaRegistry {
-    const schemaRegistry = this.__schemaRegistriesMap.get(connectionName);
+  private getSchemaRegistry(connectionName: string): SchemaRegistry {
+    const schemaRegistry = this.schemaRegistriesMap.get(connectionName);
 
     if (!schemaRegistry) {
       throw new Error(

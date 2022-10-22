@@ -23,31 +23,31 @@ import { KafkaCoreProducer } from "./kafkaCoreProducer";
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class KafkaProducer implements IDecoratedProvider {
-  private __connectionName?: string;
+  private connectionNameValue?: string;
 
-  public constructor(private readonly __kafkaCoreProducer: KafkaCoreProducer) {}
+  public constructor(private readonly kafkaCoreProducer: KafkaCoreProducer) {}
 
   public get connectionName(): string {
-    if (!this.__connectionName) {
+    if (!this.connectionNameValue) {
       throw new Error(`"connectionName" in KafkaProducer must be initialized!`);
     }
 
-    return this.__connectionName;
+    return this.connectionNameValue;
   }
 
   public set connectionName(value: string) {
-    this.__connectionName = value;
+    this.connectionNameValue = value;
   }
 
   public send(
     ...args: Parameters<Producer["send"]>
   ): ReturnType<Producer["send"]> {
-    return this.__kafkaCoreProducer.send(this.connectionName, ...args);
+    return this.kafkaCoreProducer.send(this.connectionName, ...args);
   }
 
   public sendBatch(
     ...args: Parameters<Producer["sendBatch"]>
   ): ReturnType<Producer["sendBatch"]> {
-    return this.__kafkaCoreProducer.sendBatch(this.connectionName, ...args);
+    return this.kafkaCoreProducer.sendBatch(this.connectionName, ...args);
   }
 }

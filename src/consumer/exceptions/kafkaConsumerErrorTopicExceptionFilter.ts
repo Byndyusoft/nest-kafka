@@ -40,26 +40,26 @@ import { DefaultRetryStrategy } from "../retryStrategies";
 export class KafkaConsumerErrorTopicExceptionFilter
   implements RpcExceptionFilter
 {
-  private readonly __logger = new Logger(
+  private readonly logger = new Logger(
     KafkaConsumerErrorTopicExceptionFilter.name,
   );
 
   public constructor(
-    private readonly __options: IKafkaConsumerErrorTopicExceptionFilterOptions,
+    private readonly options: IKafkaConsumerErrorTopicExceptionFilterOptions,
   ) {}
 
-  private static __isExceptionRetriable(exception: unknown): boolean {
+  private static isExceptionRetriable(exception: unknown): boolean {
     return DefaultRetryStrategy.isRetriable(exception);
   }
 
-  private static __makeKafkaConsumerError(
+  private static makeKafkaConsumerError(
     exception: unknown,
   ): KafkaConsumerError {
     if (exception instanceof KafkaConsumerError) {
       return exception;
     }
 
-    return KafkaConsumerErrorTopicExceptionFilter.__isExceptionRetriable(
+    return KafkaConsumerErrorTopicExceptionFilter.isExceptionRetriable(
       exception,
     )
       ? new KafkaConsumerRetriableError(exception)
@@ -71,28 +71,26 @@ export class KafkaConsumerErrorTopicExceptionFilter
     const context: IKafkaConsumerContext = rpcHost.getContext();
 
     const kafkaConsumerError =
-      KafkaConsumerErrorTopicExceptionFilter.__makeKafkaConsumerError(
-        exception,
-      );
+      KafkaConsumerErrorTopicExceptionFilter.makeKafkaConsumerError(exception);
 
     if (kafkaConsumerError.retriable && !context.isFinalAttempt) {
       return throwError(() => kafkaConsumerError);
     }
 
-    context.kafkaConsumerMessageHandlerLogger.error(this.__logger, exception);
+    context.kafkaConsumerMessageHandlerLogger.error(this.logger, exception);
 
     return from(
-      this.__sendMessageToErrorTopic(
+      this.sendMessageToErrorTopic(
         kafkaConsumerError,
         host,
-        this.__options.connectionName ?? context.connectionName,
+        this.options.connectionName ?? context.connectionName,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        this.__options.topicPicker(...context.kafkaOptions.topicPickerArgs),
+        this.options.topicPicker(...context.kafkaOptions.topicPickerArgs),
       ),
     );
   }
 
-  private async __sendMessageToErrorTopic(
+  private async sendMessageToErrorTopic(
     kafkaConsumerError: KafkaConsumerError,
     host: ArgumentsHost,
     connectionName: string,
@@ -104,7 +102,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     const cause = getErrorCause(kafkaConsumerError);
 
-    this.__logger.warn("Send message to error topic");
+    this.logger.warn("Send message to error topic");
 
     await context.kafkaCoreProducer.send(connectionName, {
       topic,

@@ -74,25 +74,25 @@ export class KafkaModule {
             provide: KafkaOptionsToken,
             inject: [KafkaBaseOptionsToken],
             useFactory: (kafkaOptions: IKafkaOptions) =>
-              KafkaModule.__kafkaOptionsFactory(kafkaOptions),
+              KafkaModule.kafkaOptionsFactory(kafkaOptions),
           },
           {
             provide: ConsumersMapToken,
             inject: [KafkaOptionsToken],
             useFactory: (kafkaOptions: IKafkaOptions) =>
-              KafkaModule.__consumersMapTokenFactory(kafkaOptions),
+              KafkaModule.consumersMapTokenFactory(kafkaOptions),
           },
           {
             provide: ProducersMapToken,
             inject: [KafkaOptionsToken],
             useFactory: (kafkaOptions: IKafkaOptions) =>
-              KafkaModule.__producersMapTokenFactory(kafkaOptions),
+              KafkaModule.producersMapTokenFactory(kafkaOptions),
           },
           {
             provide: SchemaRegistriesMapToken,
             inject: [KafkaOptionsToken],
             useFactory: (kafkaOptions: IKafkaOptions) =>
-              KafkaModule.__schemaRegistriesMapTokenFactory(kafkaOptions),
+              KafkaModule.schemaRegistriesMapTokenFactory(kafkaOptions),
           },
           ...providers,
         ],
@@ -103,7 +103,7 @@ export class KafkaModule {
     );
   }
 
-  private static __consumersMapTokenFactory(
+  private static consumersMapTokenFactory(
     kafkaOptions: IKafkaOptions,
   ): Map<string, Consumer> {
     return new Map(
@@ -116,7 +116,7 @@ export class KafkaModule {
     );
   }
 
-  private static __getKafkaLogger(
+  private static getKafkaLogger(
     connectionName: string,
   ): Pick<KafkaConfig, "logLevel" | "logCreator"> {
     const logger = new Logger(`kafkajs-${connectionName}`);
@@ -162,7 +162,7 @@ export class KafkaModule {
     };
   }
 
-  private static __kafkaOptionsFactory(
+  private static kafkaOptionsFactory(
     kafkaOptions: IKafkaOptions,
   ): IKafkaOptions {
     return {
@@ -172,7 +172,7 @@ export class KafkaModule {
         cluster: {
           ...connection.cluster,
           ...(!connection.cluster.logLevel && !connection.cluster.logCreator
-            ? KafkaModule.__getKafkaLogger(
+            ? KafkaModule.getKafkaLogger(
                 connection.name ?? DefaultConnectionName,
               )
             : {}),
@@ -184,7 +184,7 @@ export class KafkaModule {
     };
   }
 
-  private static __producersMapTokenFactory(
+  private static producersMapTokenFactory(
     kafkaOptions: IKafkaOptions,
   ): Map<string, Producer> {
     return new Map(
@@ -197,7 +197,7 @@ export class KafkaModule {
     );
   }
 
-  private static __schemaRegistriesMapTokenFactory(
+  private static schemaRegistriesMapTokenFactory(
     kafkaOptions: IKafkaOptions,
   ): Map<string, SchemaRegistry> {
     return new Map(
