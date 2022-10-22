@@ -19,34 +19,32 @@ import { Provider, Type } from "@nestjs/common";
 import { IDecoratedProvider } from "./decoratedProviderInterface";
 
 export class DecoratedProviders {
-  private readonly __providersMap: Map<string, symbol> = new Map();
+  private readonly providersMap: Map<string, symbol> = new Map();
 
   public constructor(
-    private readonly __decoratedProviderClass: Type<IDecoratedProvider>,
+    private readonly decoratedProviderClass: Type<IDecoratedProvider>,
   ) {}
 
   public createProviders(): Provider[] {
-    return [...this.__providersMap.entries()].map(
-      ([connectionName, token]) => ({
-        provide: token,
-        inject: [this.__decoratedProviderClass],
-        useFactory(decoratedProvider: IDecoratedProvider) {
-          decoratedProvider.connectionName = connectionName;
+    return [...this.providersMap.entries()].map(([connectionName, token]) => ({
+      provide: token,
+      inject: [this.decoratedProviderClass],
+      useFactory(decoratedProvider: IDecoratedProvider) {
+        decoratedProvider.connectionName = connectionName;
 
-          return decoratedProvider;
-        },
-      }),
-    );
+        return decoratedProvider;
+      },
+    }));
   }
 
   public getToken(connectionName: string): symbol {
-    if (!this.__providersMap.has(connectionName)) {
-      this.__providersMap.set(
+    if (!this.providersMap.has(connectionName)) {
+      this.providersMap.set(
         connectionName,
-        Symbol(`${this.__decoratedProviderClass.name}-${connectionName}`),
+        Symbol(`${this.decoratedProviderClass.name}-${connectionName}`),
       );
     }
 
-    return this.__providersMap.get(connectionName)!;
+    return this.providersMap.get(connectionName)!;
   }
 }

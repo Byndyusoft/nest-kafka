@@ -18,13 +18,13 @@ import { AxiosRetryStrategy } from "./axiosRetryStrategy";
 import { NetworkRetryStrategy } from "./networkRetryStrategy";
 
 export class DefaultRetryStrategy {
-  private static readonly __retryStrategies = [
+  private static readonly retryStrategies = [
     NetworkRetryStrategy,
     AxiosRetryStrategy,
   ];
 
   public static isRetriable(error: unknown): boolean {
-    return DefaultRetryStrategy.__retryStrategies.some((x) =>
+    return DefaultRetryStrategy.retryStrategies.some((x) =>
       x.isRetriable(error),
     );
   }

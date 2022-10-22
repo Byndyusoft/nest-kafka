@@ -16,7 +16,7 @@
 
 export class NetworkRetryStrategy {
   // See https://github.com/FGRibreau/node-request-retry/blob/master/strategies/NetworkError.js
-  private static readonly __retriableCodes = new Set([
+  private static readonly retriableCodes = new Set([
     "ECONNRESET",
     "ENOTFOUND",
     "ESOCKETTIMEDOUT",
@@ -33,7 +33,7 @@ export class NetworkRetryStrategy {
       return false;
     }
 
-    return NetworkRetryStrategy.__retriableCodes.has(
+    return NetworkRetryStrategy.retriableCodes.has(
       (error as { code: string }).code,
     );
   }

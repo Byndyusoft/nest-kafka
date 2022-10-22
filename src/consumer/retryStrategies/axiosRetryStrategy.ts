@@ -19,7 +19,7 @@ import axios from "axios";
 
 export class AxiosRetryStrategy {
   // See https://stackoverflow.com/questions/51770071/what-are-the-http-codes-to-automatically-retry-the-request
-  private static readonly __retriableStatuses = new Set([
+  private static readonly retriableStatuses = new Set([
     // 4xx
     HttpStatus.REQUEST_TIMEOUT,
     HttpStatus.TOO_MANY_REQUESTS,
@@ -41,6 +41,6 @@ export class AxiosRetryStrategy {
       return false;
     }
 
-    return AxiosRetryStrategy.__retriableStatuses.has(status);
+    return AxiosRetryStrategy.retriableStatuses.has(status);
   }
 }

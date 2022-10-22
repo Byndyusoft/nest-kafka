@@ -40,49 +40,49 @@ import { KafkaConsumerMessageHandler } from "./kafkaConsumerMessageHandler";
 export class KafkaConsumer extends Server implements CustomTransportStrategy {
   public readonly transportId = KafkaConsumerTransportId;
 
-  private readonly __messageHandlersMap: Map<
+  private readonly messageHandlersMap: Map<
     string,
     Map<string, MessageHandler>
   > = new Map();
 
   public constructor(
     @Inject(ConsumersMapToken)
-    private readonly __consumersMap: Map<string, Consumer>,
-    private readonly __kafkaConsumerMessageHandler: KafkaConsumerMessageHandler,
+    private readonly consumersMap: Map<string, Consumer>,
+    private readonly kafkaConsumerMessageHandler: KafkaConsumerMessageHandler,
     @Inject(KafkaOptionsToken)
-    private readonly __kafkaOptions: IKafkaOptions,
+    private readonly kafkaOptions: IKafkaOptions,
   ) {
     super();
   }
 
   public async close(): Promise<void> {
     await Promise.all(
-      [...this.__consumersMap.values()].map((x) => x.disconnect()),
+      [...this.consumersMap.values()].map((x) => x.disconnect()),
     );
   }
 
   public listen(callback: (error?: unknown) => void): void {
-    this.__start().then(callback).catch(callback);
+    this.start().then(callback).catch(callback);
   }
 
-  private __addMessageHandlerToMap(
+  private addMessageHandlerToMap(
     connectionName: string,
     topics: string[],
     messageHandler: MessageHandler,
   ): void {
-    if (!this.__messageHandlersMap.has(connectionName)) {
-      this.__messageHandlersMap.set(connectionName, new Map());
+    if (!this.messageHandlersMap.has(connectionName)) {
+      this.messageHandlersMap.set(connectionName, new Map());
     }
 
-    const connectionsMap = this.__messageHandlersMap.get(connectionName)!;
+    const connectionsMap = this.messageHandlersMap.get(connectionName)!;
 
     for (const topic of topics) {
       connectionsMap.set(topic, messageHandler);
     }
   }
 
-  private __getConsumer(connectionName: string): Consumer {
-    const consumer = this.__consumersMap.get(connectionName);
+  private getConsumer(connectionName: string): Consumer {
+    const consumer = this.consumersMap.get(connectionName);
 
     if (!consumer) {
       throw new Error(
@@ -93,15 +93,15 @@ export class KafkaConsumer extends Server implements CustomTransportStrategy {
     return consumer;
   }
 
-  private async __run(): Promise<void> {
-    for (const [connectionName, consumer] of this.__consumersMap) {
+  private async run(): Promise<void> {
+    for (const [connectionName, consumer] of this.consumersMap) {
       await consumer.run({
         eachMessage: async (rawPayload) => {
-          const messageHandler = this.__messageHandlersMap
+          const messageHandler = this.messageHandlersMap
             .get(connectionName)!
             .get(rawPayload.topic)!;
 
-          await this.__kafkaConsumerMessageHandler.handleMessage(
+          await this.kafkaConsumerMessageHandler.handleMessage(
             connectionName,
             messageHandler,
             rawPayload,
@@ -111,18 +111,16 @@ export class KafkaConsumer extends Server implements CustomTransportStrategy {
     }
   }
 
-  private async __start(): Promise<void> {
-    await Promise.all(
-      [...this.__consumersMap.values()].map((x) => x.connect()),
-    );
+  private async start(): Promise<void> {
+    await Promise.all([...this.consumersMap.values()].map((x) => x.connect()));
 
-    await this.__subscribe();
-    await this.__run();
+    await this.subscribe();
+    await this.run();
   }
 
-  private async __subscribe(): Promise<void> {
+  private async subscribe(): Promise<void> {
     const context = vm.createContext({
-      topicPickerArgs: this.__kafkaOptions.topicPickerArgs,
+      topicPickerArgs: this.kafkaOptions.topicPickerArgs,
     });
 
     for (const [
@@ -139,12 +137,12 @@ export class KafkaConsumer extends Server implements CustomTransportStrategy {
           | string[],
       ].flat();
 
-      await this.__getConsumer(connectionName).subscribe({
+      await this.getConsumer(connectionName).subscribe({
         topics,
         fromBeginning,
       });
 
-      this.__addMessageHandlerToMap(connectionName, topics, messageHandler);
+      this.addMessageHandlerToMap(connectionName, topics, messageHandler);
     }
   }
 }

@@ -33,10 +33,10 @@ import {
 @Injectable()
 export class KafkaConsumerPayloadDecoder implements NestInterceptor {
   public constructor(
-    private readonly __options: IKafkaConsumerPayloadDecoderOptions,
+    private readonly options: IKafkaConsumerPayloadDecoderOptions,
   ) {}
 
-  private static __decodeHeaders(
+  private static decodeHeaders(
     data?: IHeaders,
     decoder?: "string",
   ): IKafkaConsumerPayloadHeaders {
@@ -57,7 +57,7 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
     );
   }
 
-  private static async __decodeKeyOrValue(
+  private static async decodeKeyOrValue(
     { connectionName, kafkaCoreSchemaRegistry }: IKafkaConsumerContext,
     data: Buffer | null,
     decoder?: "string" | "json" | "schemaRegistry",
@@ -84,21 +84,21 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
     const context: IKafkaConsumerContext = rpcHost.getContext();
     const payload: IKafkaConsumerPayload = rpcHost.getData();
 
-    payload.key = await KafkaConsumerPayloadDecoder.__decodeKeyOrValue(
+    payload.key = await KafkaConsumerPayloadDecoder.decodeKeyOrValue(
       context,
       payload.rawPayload.message.key,
-      this.__options.key,
+      this.options.key,
     );
 
-    payload.value = await KafkaConsumerPayloadDecoder.__decodeKeyOrValue(
+    payload.value = await KafkaConsumerPayloadDecoder.decodeKeyOrValue(
       context,
       payload.rawPayload.message.value,
-      this.__options.value,
+      this.options.value,
     );
 
-    payload.headers = KafkaConsumerPayloadDecoder.__decodeHeaders(
+    payload.headers = KafkaConsumerPayloadDecoder.decodeHeaders(
       payload.rawPayload.message.headers,
-      this.__options.headers,
+      this.options.headers,
     );
 
     return next.handle();

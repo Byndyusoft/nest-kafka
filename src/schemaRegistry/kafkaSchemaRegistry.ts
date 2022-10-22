@@ -23,42 +23,42 @@ import { KafkaCoreSchemaRegistry } from "./kafkaCoreSchemaRegistry";
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class KafkaSchemaRegistry implements IDecoratedProvider {
-  private __connectionName?: string;
+  private connectionNameValue?: string;
 
   public constructor(
-    private readonly __kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
+    private readonly kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
   ) {}
 
   public get connectionName(): string {
-    if (!this.__connectionName) {
+    if (!this.connectionNameValue) {
       throw new Error(
         `"connectionName" in KafkaSchemaRegistry must be initialized!`,
       );
     }
 
-    return this.__connectionName;
+    return this.connectionNameValue;
   }
 
   public set connectionName(value: string) {
-    this.__connectionName = value;
+    this.connectionNameValue = value;
   }
 
   public decode(
     ...args: Parameters<SchemaRegistry["decode"]>
   ): ReturnType<SchemaRegistry["decode"]> {
-    return this.__kafkaCoreSchemaRegistry.decode(this.connectionName, ...args);
+    return this.kafkaCoreSchemaRegistry.decode(this.connectionName, ...args);
   }
 
   public encode(
     ...args: Parameters<SchemaRegistry["encode"]>
   ): ReturnType<SchemaRegistry["encode"]> {
-    return this.__kafkaCoreSchemaRegistry.encode(this.connectionName, ...args);
+    return this.kafkaCoreSchemaRegistry.encode(this.connectionName, ...args);
   }
 
   public getLatestSchemaId(
     ...args: Parameters<SchemaRegistry["getLatestSchemaId"]>
   ): ReturnType<SchemaRegistry["getLatestSchemaId"]> {
-    return this.__kafkaCoreSchemaRegistry.getLatestSchemaId(
+    return this.kafkaCoreSchemaRegistry.getLatestSchemaId(
       this.connectionName,
       ...args,
     );
@@ -67,9 +67,6 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
   public getSchema(
     ...args: Parameters<SchemaRegistry["getSchema"]>
   ): ReturnType<SchemaRegistry["getSchema"]> {
-    return this.__kafkaCoreSchemaRegistry.getSchema(
-      this.connectionName,
-      ...args,
-    );
+    return this.kafkaCoreSchemaRegistry.getSchema(this.connectionName, ...args);
   }
 }

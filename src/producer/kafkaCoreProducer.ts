@@ -28,37 +28,35 @@ import { ProducersMapToken } from "~/src/consts";
 export class KafkaCoreProducer implements OnModuleInit, OnModuleDestroy {
   public constructor(
     @Inject(ProducersMapToken)
-    private readonly __producersMap: Map<string, Producer>,
+    private readonly producersMap: Map<string, Producer>,
   ) {}
 
   public async onModuleDestroy(): Promise<void> {
     await Promise.all(
-      [...this.__producersMap.values()].map((x) => x.disconnect()),
+      [...this.producersMap.values()].map((x) => x.disconnect()),
     );
   }
 
   public async onModuleInit(): Promise<void> {
-    await Promise.all(
-      [...this.__producersMap.values()].map((x) => x.connect()),
-    );
+    await Promise.all([...this.producersMap.values()].map((x) => x.connect()));
   }
 
   public send(
     connectionName: string,
     ...args: Parameters<Producer["send"]>
   ): ReturnType<Producer["send"]> {
-    return this.__getProducer(connectionName).send(...args);
+    return this.getProducer(connectionName).send(...args);
   }
 
   public sendBatch(
     connectionName: string,
     ...args: Parameters<Producer["sendBatch"]>
   ): ReturnType<Producer["sendBatch"]> {
-    return this.__getProducer(connectionName).sendBatch(...args);
+    return this.getProducer(connectionName).sendBatch(...args);
   }
 
-  private __getProducer(connectionName: string): Producer {
-    const producer = this.__producersMap.get(connectionName);
+  private getProducer(connectionName: string): Producer {
+    const producer = this.producersMap.get(connectionName);
 
     if (!producer) {
       throw new Error(

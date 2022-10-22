@@ -22,10 +22,10 @@ import { getErrorCause, serializeError } from "./errors";
 
 @Injectable()
 export class KafkaConsumerMessageHandlerLogger {
-  public constructor(private readonly __tracingService: TracingService) {}
+  public constructor(private readonly tracingService: TracingService) {}
 
   public error(logger: LoggerService | PinoLogger, error: unknown): void {
-    const rootSpan = this.__tracingService.getRootSpan();
+    const rootSpan = this.tracingService.getRootSpan();
 
     const cause = getErrorCause(error);
 
