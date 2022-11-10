@@ -21,7 +21,7 @@
     "tsconfig.json",
     "!dist/*.tsbuildinfo",
     "!**/__tests__",
-    "!**/*spec.ts"
+    "!**/*test.ts"
   ],
   "scripts": {
     "_test:cov": "jest --coverage",
@@ -69,7 +69,7 @@
       "jest-extended/all"
     ],
     "testEnvironment": "node",
-    "testRegex": ".*\\.spec\\.ts$",
+    "testRegex": ".*\\.test\\.ts$",
     "transform": {
       "^.+\\.ts$": "ts-jest"
     }
