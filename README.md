@@ -136,7 +136,7 @@ export class ConfigModule {
           allowAutoTopicCreation:
             process.env.KAFKA_CONSUMER_ALLOW_AUTO_TOPIC_CREATION ?? true,
           sessionTimeout: process.env.KAFKA_SESSION_TIMEOUT_MS ?? 30000,
-          heartbeatInterval: process.env.KAFKA_HEARTBEAT_INTERVAL_MS ?? 3000
+          heartbeatInterval: process.env.KAFKA_HEARTBEAT_INTERVAL_MS ?? 3000,
         },
         producer: {
           allowAutoTopicCreation:
