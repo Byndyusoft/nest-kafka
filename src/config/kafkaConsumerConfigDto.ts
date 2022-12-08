@@ -26,8 +26,8 @@ export class KafkaConsumerConfigDto {
     return {
       groupId: config.groupId,
       allowAutoTopicCreation: config.allowAutoTopicCreation as boolean,
-      sessionTimeout: config.sessionTimeout,
-      heartbeatInterval: config.heartbeatInterval,
+      sessionTimeout: config.sessionTimeout as number,
+      heartbeatInterval: config.heartbeatInterval as number,
     };
   }
 
@@ -42,10 +42,10 @@ export class KafkaConsumerConfigDto {
   @IsInt()
   @IsOptional()
   @TransformToNumber()
-  public readonly sessionTimeout?: number;
+  public readonly sessionTimeout?: string | number;
 
   @IsInt()
   @IsOptional()
   @TransformToNumber()
-  public readonly heartbeatInterval?: number;
+  public readonly heartbeatInterval?: string | number;
 }
