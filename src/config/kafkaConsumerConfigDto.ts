@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-import { TransformToBoolean } from "@byndyusoft/class-validator-extended";
-import { IsBoolean, IsOptional, IsString } from "class-validator";
+import {
+  TransformToBoolean,
+  TransformToNumber,
+} from "@byndyusoft/class-validator-extended";
+import { IsBoolean, IsInt, IsOptional, IsString } from "class-validator";
 import { ConsumerConfig } from "kafkajs";
 
 export class KafkaConsumerConfigDto {
@@ -23,6 +26,8 @@ export class KafkaConsumerConfigDto {
     return {
       groupId: config.groupId,
       allowAutoTopicCreation: config.allowAutoTopicCreation as boolean,
+      sessionTimeout: config.sessionTimeout,
+      heartbeatInterval: config.heartbeatInterval,
     };
   }
 
@@ -33,4 +38,14 @@ export class KafkaConsumerConfigDto {
   @IsBoolean()
   @IsOptional()
   public readonly allowAutoTopicCreation?: string | boolean;
+
+  @IsInt()
+  @IsOptional()
+  @TransformToNumber()
+  public readonly sessionTimeout?: number;
+
+  @IsInt()
+  @IsOptional()
+  @TransformToNumber()
+  public readonly heartbeatInterval?: number;
 }
