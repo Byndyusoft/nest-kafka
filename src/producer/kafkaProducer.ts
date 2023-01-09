@@ -17,7 +17,7 @@
 import { Injectable, Scope } from "@nestjs/common";
 import { Producer } from "kafkajs";
 
-import { IDecoratedProvider } from "~/src/decoratedProviders";
+import { IDecoratedProvider } from "../decoratedProviders";
 
 import { KafkaCoreProducer } from "./kafkaCoreProducer";
 

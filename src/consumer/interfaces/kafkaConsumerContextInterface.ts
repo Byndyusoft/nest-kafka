@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { IKafkaOptions } from "~/src/options";
-import { KafkaCoreProducer } from "~/src/producer";
-import { KafkaCoreSchemaRegistry } from "~/src/schemaRegistry";
-
+import { IKafkaOptions } from "../../options";
+import { KafkaCoreProducer } from "../../producer";
+import { KafkaCoreSchemaRegistry } from "../../schemaRegistry";
 import { KafkaConsumerMessageHandlerLogger } from "../kafkaConsumerMessageHandlerLogger";
 
 export interface IKafkaConsumerContext {

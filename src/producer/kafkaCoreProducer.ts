@@ -22,7 +22,7 @@ import {
 } from "@nestjs/common";
 import { Producer } from "kafkajs";
 
-import { ProducersMapToken } from "~/src/consts";
+import { ProducersMapToken } from "../consts";
 
 @Injectable()
 export class KafkaCoreProducer implements OnModuleInit, OnModuleDestroy {

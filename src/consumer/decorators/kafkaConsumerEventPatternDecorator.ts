@@ -16,8 +16,7 @@
 
 import { EventPattern } from "@nestjs/microservices";
 
-import { DefaultConnectionName, KafkaConsumerTransportId } from "~/src/consts";
-
+import { DefaultConnectionName, KafkaConsumerTransportId } from "../../consts";
 import {
   IKafkaConsumerOptions,
   IKafkaConsumerSerializedOptions,
