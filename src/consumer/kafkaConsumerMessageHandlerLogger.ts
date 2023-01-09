@@ -15,8 +15,8 @@
  */
 
 import { Tags, TracingService } from "@byndyusoft/nest-opentracing";
+import { PinoLogger } from "@byndyusoft/nest-pino";
 import { Injectable, LoggerService } from "@nestjs/common";
-import { PinoLogger } from "nestjs-pino";
 
 import { getErrorCause, serializeError } from "./errors";
 

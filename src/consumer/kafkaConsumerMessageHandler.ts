@@ -16,11 +16,11 @@
 
 import { TracingService } from "@byndyusoft/nest-opentracing";
 import { AsyncContext as TracingAsyncContext } from "@byndyusoft/nest-opentracing/dist/async-context";
+import { PinoLogger } from "@byndyusoft/nest-pino";
+import { storage as loggerStorage, Store } from "@byndyusoft/nest-pino/storage";
 import { Inject, Injectable } from "@nestjs/common";
 import { MessageHandler } from "@nestjs/microservices";
 import { EachMessagePayload } from "kafkajs";
-import { PinoLogger } from "nestjs-pino";
-import { storage as loggerStorage, Store } from "nestjs-pino/storage";
 import retry from "retry";
 import { isObservable, lastValueFrom } from "rxjs";
 
