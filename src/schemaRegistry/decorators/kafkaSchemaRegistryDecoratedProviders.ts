@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { DecoratedProviders } from "~/src/decoratedProviders";
-
+import { DecoratedProviders } from "../../decoratedProviders";
 import { KafkaSchemaRegistry } from "../kafkaSchemaRegistry";
 
 export const kafkaSchemaRegistryDecoratedProviders = new DecoratedProviders(

@@ -17,7 +17,7 @@
 import { SchemaRegistry } from "@kafkajs/confluent-schema-registry";
 import { Injectable, Scope } from "@nestjs/common";
 
-import { IDecoratedProvider } from "~/src/decoratedProviders";
+import { IDecoratedProvider } from "../decoratedProviders";
 
 import { KafkaCoreSchemaRegistry } from "./kafkaCoreSchemaRegistry";
 

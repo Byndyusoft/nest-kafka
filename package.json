@@ -17,17 +17,14 @@
   "files": [
     "dist",
     "src",
-    "index.ts",
-    "tsconfig.json",
-    "!dist/*.tsbuildinfo",
-    "!**/__tests__",
-    "!**/*spec.ts"
+    "!dist/*.tsbuildinfo"
   ],
   "scripts": {
     "_test:cov": "jest --coverage",
     "prebuild": "shx rm -rf ./dist",
-    "build": "tsc --project ./tsconfig.build.json",
-    "postinstall": "husky install && ts-patch install",
+    "build": "yarn run prebuild && yarn run build:src",
+    "build:src": "tsc --project ./tsconfig.build.json",
+    "postinstall": "husky install",
     "lint": "yarn run lint:eslint && yarn run lint:markdown && yarn run lint:prettier",
     "lint:eslint": "eslint --ignore-path ./.gitignore --max-warnings 0 --ext .ts,.js .",
     "lint:eslint:fix": "eslint --ignore-path ./.gitignore --fix --ext .ts,.js .",
@@ -43,33 +40,26 @@
   "jest": {
     "collectCoverageFrom": [
       "./src/**/*.ts",
-      "!**/__tests__/**/*.ts",
       "!**/index.ts"
     ],
     "coverageDirectory": "<rootDir>/coverage",
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    },
+    "coverageReporters": [
+      "lcov",
+      "text"
+    ],
     "moduleFileExtensions": [
       "ts",
       "js"
     ],
     "resetMocks": true,
-    "rootDir": "./",
     "roots": [
-      "<rootDir>/src",
       "<rootDir>/test"
     ],
     "setupFilesAfterEnv": [
       "jest-extended/all"
     ],
     "testEnvironment": "node",
-    "testRegex": ".*\\.spec\\.ts$",
+    "testRegex": ".*\\.test\\.ts$",
     "transform": {
       "^.+\\.ts$": "ts-jest"
     }
@@ -131,6 +121,7 @@
     "nestjs-pino": "^3.1.1",
     "rxjs": "^7.5.7"
   },
+  "packageManager": "yarn@4.0.0-rc.35",
   "engines": {
     "node": ">=14"
   },

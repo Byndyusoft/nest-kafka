@@ -16,7 +16,7 @@
 
 import { Inject } from "@nestjs/common";
 
-import { DefaultConnectionName } from "~/src/consts";
+import { DefaultConnectionName } from "../../consts";
 
 import { kafkaProducerDecoratedProviders } from "./kafkaProducerDecoratedProviders";
 

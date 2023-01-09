@@ -24,10 +24,10 @@ import { storage as loggerStorage, Store } from "nestjs-pino/storage";
 import retry from "retry";
 import { isObservable, lastValueFrom } from "rxjs";
 
-import { KafkaOptionsToken } from "~/src/consts";
-import { IKafkaOptions } from "~/src/options";
-import { KafkaCoreProducer } from "~/src/producer";
-import { KafkaCoreSchemaRegistry } from "~/src/schemaRegistry";
+import { KafkaOptionsToken } from "../consts";
+import { IKafkaOptions } from "../options";
+import { KafkaCoreProducer } from "../producer";
+import { KafkaCoreSchemaRegistry } from "../schemaRegistry";
 
 import { getErrorCause, KafkaConsumerError } from "./errors";
 import { IKafkaConsumerContext, IKafkaConsumerPayload } from "./interfaces";

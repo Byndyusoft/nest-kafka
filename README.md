@@ -22,15 +22,9 @@ Kafka for NestJS
 ## Requirements
 
 - Node.js v14 LTS or later
-- npm or yarn
+- Yarn
 
 ## Install
-
-```bash
-npm install @byndyusoft/nest-kafka @byndyusoft/class-validator-extended @byndyusoft/nest-opentracing @kafkajs/confluent-schema-registry @nestjs/common @nestjs/microservices class-transformer class-validator kafkajs nestjs-pino rxjs
-```
-
-or
 
 ```bash
 yarn add @byndyusoft/nest-kafka @byndyusoft/class-validator-extended @byndyusoft/nest-opentracing @kafkajs/confluent-schema-registry @nestjs/common @nestjs/microservices class-transformer class-validator kafkajs nestjs-pino rxjs

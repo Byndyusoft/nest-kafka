@@ -30,8 +30,8 @@ import {
   ConsumersMapToken,
   KafkaConsumerTransportId,
   KafkaOptionsToken,
-} from "~/src/consts";
-import { IKafkaOptions } from "~/src/options";
+} from "../consts";
+import { IKafkaOptions } from "../options";
 
 import { IKafkaConsumerSerializedOptions } from "./interfaces";
 import { KafkaConsumerMessageHandler } from "./kafkaConsumerMessageHandler";

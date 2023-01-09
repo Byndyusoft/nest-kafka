@@ -17,7 +17,7 @@
 import { SchemaRegistry } from "@kafkajs/confluent-schema-registry";
 import { Inject, Injectable } from "@nestjs/common";
 
-import { SchemaRegistriesMapToken } from "~/src/consts";
+import { SchemaRegistriesMapToken } from "../consts";
 
 @Injectable()
 export class KafkaCoreSchemaRegistry {

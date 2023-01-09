@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { DecoratedProviders } from "~/src/decoratedProviders";
-
+import { DecoratedProviders } from "../../decoratedProviders";
 import { KafkaProducer } from "../kafkaProducer";
 
 export const kafkaProducerDecoratedProviders = new DecoratedProviders(
