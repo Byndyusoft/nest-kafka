@@ -14,7 +14,7 @@ Kafka for NestJS
 - Integration with [nest-template](https://github.com/Byndyusoft/nest-template)
 - Consumer
   - Subscribe topic is not static, you can pick it from config
-  - Process message in async context with [Tracing](https://www.npmjs.com/package/@byndyusoft/nest-opentracing) and [Logging](https://www.npmjs.com/package/nestjs-pino)
+  - Process message in async context with [Tracing](https://www.npmjs.com/package/@byndyusoft/nest-opentracing) and [Logging](https://www.npmjs.com/package/@byndyusoft/nest-pino)
   - String, JSON and Schema Registry decoders for key and value, headers decoder with array support
   - [Dead letter queue](https://www.confluent.io/blog/error-handling-patterns-in-kafka/#pattern-2) pattern support with smart retry mechanism
   - Support custom decoders and error handling patterns
@@ -27,7 +27,7 @@ Kafka for NestJS
 ## Install
 
 ```bash
-yarn add @byndyusoft/nest-kafka @byndyusoft/class-validator-extended @byndyusoft/nest-opentracing @kafkajs/confluent-schema-registry @nestjs/common @nestjs/microservices class-transformer class-validator kafkajs nestjs-pino rxjs
+yarn add @byndyusoft/nest-kafka @byndyusoft/class-validator-extended @byndyusoft/nest-opentracing @byndyusoft/nest-pino @kafkajs/confluent-schema-registry @nestjs/common @nestjs/microservices class-transformer class-validator kafkajs rxjs
 ```
 
 ## Usage

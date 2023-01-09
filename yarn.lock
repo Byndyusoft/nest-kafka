@@ -490,6 +490,7 @@ __metadata:
     "@byndyusoft/eslint-config": "npm:2.2.1"
     "@byndyusoft/nest-dynamic-module": "npm:^1.0.0"
     "@byndyusoft/nest-opentracing": "npm:2.3.2"
+    "@byndyusoft/nest-pino": "npm:3.1.2-1"
     "@byndyusoft/tsconfig": "npm:1.2.0"
     "@commitlint/cli": "npm:17.4.1"
     "@commitlint/config-conventional": "npm:17.4.0"
@@ -513,7 +514,6 @@ __metadata:
     lint-staged: "npm:13.1.0"
     lodash: "npm:^4.17.21"
     markdownlint-cli: "npm:0.33.0"
-    nestjs-pino: "npm:3.1.2"
     pino: "npm:8.8.0"
     pinst: "npm:3.0.0"
     prettier: "npm:2.8.2"
@@ -530,13 +530,13 @@ __metadata:
   peerDependencies:
     "@byndyusoft/class-validator-extended": ^1.0.1
     "@byndyusoft/nest-opentracing": ^2.3.2
+    "@byndyusoft/nest-pino": ^3.1.2-1
     "@kafkajs/confluent-schema-registry": ^3.3.0
     "@nestjs/common": ^8.0.0 || ^9.0.0
     "@nestjs/microservices": ^8.0.0 || ^9.0.0
     class-transformer: ^0.5.1
     class-validator: ^0.14.0
     kafkajs: ^2.2.3
-    nestjs-pino: ^3.1.2
     rxjs: ^7.8.0
   languageName: unknown
   linkType: soft
@@ -556,6 +556,16 @@ __metadata:
     axios: ^0.21.1
     express: ^4.17.1
   checksum: 4a227e0d794882ee1ec97d38a788e8a497c06054c6fad09049f5661ee7a31c460c0f09b2fd487651b1097a5db88c3fb374cd8cdc56f65e998778ff215afa152e
+  languageName: node
+  linkType: hard
+
+"@byndyusoft/nest-pino@npm:3.1.2-1":
+  version: 3.1.2-1
+  resolution: "@byndyusoft/nest-pino@npm:3.1.2-1"
+  peerDependencies:
+    "@nestjs/common": ^8.0.0 || ^9.0.0
+    pino-http: ^6.4.0 || ^7.0.0 || ^8.0.0
+  checksum: d5d82d3cbba0a617c21f88670aaf6eb0a399793b19ca73e8beb36f4f97b766a2a28fafb67c89e0343b27bc99e92333bf2762303a330403587b82ccac2aed7d19
   languageName: node
   linkType: hard
 
@@ -7466,16 +7476,6 @@ __metadata:
   version: 1.0.0
   resolution: "nerf-dart@npm:1.0.0"
   checksum: f664e2e30d5e50c9434cfdd996ac265c92c72802688472ca48b6b976f01e50546541d3677717dfd76536d9174155ff5980ea9a42011f51c1888456feac0c41a5
-  languageName: node
-  linkType: hard
-
-"nestjs-pino@npm:3.1.2":
-  version: 3.1.2
-  resolution: "nestjs-pino@npm:3.1.2"
-  peerDependencies:
-    "@nestjs/common": ^8.0.0 || ^9.0.0
-    pino-http: ^6.4.0 || ^7.0.0 || ^8.0.0
-  checksum: 9a8392e491c076393ca9d07137b3459bff9a5de040aefcb1913c39fe3f69f8147523ae8150a938bf6ef4bc2e5f69f42116f95cf95ed97891bc0f2f94715cc806
   languageName: node
   linkType: hard
 
