@@ -502,7 +502,7 @@ __metadata:
     "@types/lodash": "npm:4.14.191"
     "@types/node": "npm:14.18.36"
     "@types/retry": "npm:^0.12.2"
-    axios: "npm:^0.27.2"
+    axios: "npm:^1.2.4"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.0"
     error-cause: "npm:^1.0.5"
@@ -2623,13 +2623,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.27.2":
-  version: 0.27.2
-  resolution: "axios@npm:0.27.2"
+"axios@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "axios@npm:1.2.4"
   dependencies:
-    follow-redirects: "npm:^1.14.9"
+    follow-redirects: "npm:^1.15.0"
     form-data: "npm:^4.0.0"
-  checksum: 4cd898afe90caaf05307fc5a0da4c61012493b6bfd4937fff9774455c01d368db583b17c4737e73853f149b32e615487930b491661682a1f69a1973b1f533bb7
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 98c46bbd2c6ad44fe4efc9baeb353c144161406aa47de0f38e78d22fa85653dce00c51880627e32b1fcbcf7162fe1a971a63fdf3d54d8ef72010476be18fd4f6
   languageName: node
   linkType: hard
 
@@ -4678,7 +4679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.9":
+"follow-redirects@npm:^1.15.0":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
@@ -8568,6 +8569,13 @@ __metadata:
     pbjs: bin/pbjs
     pbts: bin/pbts
   checksum: 5a7a343bc1f4029022433690e9a1734a89a80fc441b580ddc8486262417b7755bddafd637a88c0f8105e594e361a02218508df67caf1ac9c18bbca82e6ab60ee
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: 0bba2ef7c8374b384e94e4477764e53df66fcdfa7d19e2c4a063cb39eea979c139ce13981970223665422e72b7d149609a927046e2e40ab340b84d91af082591
   languageName: node
   linkType: hard
 
