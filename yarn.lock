@@ -500,7 +500,7 @@ __metadata:
     "@types/error-cause": "npm:^1.0.1"
     "@types/jest": "npm:29.2.5"
     "@types/lodash": "npm:4.14.191"
-    "@types/node": "npm:14.18.36"
+    "@types/node": "npm:18.11.18"
     "@types/retry": "npm:^0.12.2"
     axios: "npm:^0.27.2"
     class-transformer: "npm:0.5.1"
@@ -2007,17 +2007,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0":
+"@types/node@npm:*, @types/node@npm:18.11.18, @types/node@npm:>=13.7.0":
   version: 18.11.18
   resolution: "@types/node@npm:18.11.18"
   checksum: bd39552701928d4a1613bc46adf8b65f8212064c2b5475a67161b6c4cef21ddb0a5c2ba062673213f8f5301ef6e171241a9e274a9b59c9fc1f5e2b69764740eb
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:14.18.36":
-  version: 14.18.36
-  resolution: "@types/node@npm:14.18.36"
-  checksum: feaeb477e719637ba80a303de420b06ed321c557ea8d0642bd19dbd60b92458a2903ad21221c713c9676df3f02caf37f7290d7797094b2fc5c6fc4281aebbe74
   languageName: node
   linkType: hard
 
