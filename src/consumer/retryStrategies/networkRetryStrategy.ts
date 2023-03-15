@@ -16,11 +16,13 @@
 
 export class NetworkRetryStrategy {
   // See https://github.com/FGRibreau/node-request-retry/blob/master/strategies/NetworkError.js
+  // and ECONNABORTED for axios request timeout, see https://github.com/axios/axios/issues/1543
   private static readonly retriableCodes = new Set([
     "ECONNRESET",
     "ENOTFOUND",
     "ESOCKETTIMEDOUT",
     "ETIMEDOUT",
+    "ECONNABORTED",
     "ECONNREFUSED",
     "EHOSTUNREACH",
     "EPIPE",
