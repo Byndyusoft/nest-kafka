@@ -267,7 +267,7 @@ export class InfrastructureModule {
 </details>
 
 <details>
-<summary>4.2. If you want, you can not create <code>consumer</code>, <code>producer</code> or <code>schemaRegistry</code></summary>
+<summary>4.2. You are not required to initialize all modules together, i.e. you can only create <code>consumer</code> without <code>producer</code> and <code>schemaRegistry</code></summary>
 
 ```typescript
 import {
