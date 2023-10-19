@@ -124,6 +124,7 @@ export class ConfigModule {
           password: process.env.KAFKA_PASSWORD,
           ssl: process.env.KAFKA_SSL,
           ca: process.env.KAFKA_CA,
+          connectionTimeout: process.env.KAFKA_CONNECTION_TIMEOUT, // default is 1 s.
         },
         consumer: {
           groupId: process.env.KAFKA_CONSUMER_GROUP_ID as string,
