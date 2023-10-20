@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-import { TransformToBoolean } from "@byndyusoft/class-validator-extended";
+import {
+  TransformToBoolean,
+  TransformToNumber,
+} from "@byndyusoft/class-validator-extended";
 import { Transform } from "class-transformer";
 import {
   ArrayMinSize,
   IsArray,
   IsBoolean,
   IsIn,
+  IsInt,
   IsOptional,
   IsString,
 } from "class-validator";
@@ -46,6 +50,7 @@ export class KafkaClusterConfigDto {
 
     return {
       brokers,
+      connectionTimeout: config.connectionTimeout,
       ...this.getKafkaSslConfig(transformedConfig),
       ...this.getKafkaSaslConfig(transformedConfig),
     };
@@ -122,4 +127,9 @@ export class KafkaClusterConfigDto {
   )
   @IsOptional()
   public readonly ca?: string | Buffer;
+
+  @IsInt()
+  @IsOptional()
+  @TransformToNumber()
+  public readonly connectionTimeout?: number;
 }
