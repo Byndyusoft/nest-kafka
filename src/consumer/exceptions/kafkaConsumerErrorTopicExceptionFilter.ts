@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   ArgumentsHost,
   Catch,
@@ -40,13 +42,23 @@ import { DefaultRetryStrategy } from "../retryStrategies";
 export class KafkaConsumerErrorTopicExceptionFilter
   implements RpcExceptionFilter
 {
+  private readonly errorTopicPicker: (...args: any[]) => string;
+
   private readonly logger = new Logger(
     KafkaConsumerErrorTopicExceptionFilter.name,
   );
 
   public constructor(
     private readonly options: IKafkaConsumerErrorTopicExceptionFilterOptions,
-  ) {}
+  ) {
+    const errorTopicPicker = options.errorTopicPicker ?? options.topicPicker;
+
+    if (!errorTopicPicker) {
+      throw new Error("errorTopicPicker must be defined");
+    }
+
+    this.errorTopicPicker = errorTopicPicker;
+  }
 
   private static isExceptionRetriable(exception: unknown): boolean {
     return DefaultRetryStrategy.isRetriable(exception);
@@ -85,7 +97,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
         host,
         this.options.connectionName ?? context.connectionName,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        this.options.topicPicker(...context.kafkaOptions.topicPickerArgs),
+        this.errorTopicPicker(...context.kafkaOptions.topicPickerArgs),
       ),
     );
   }

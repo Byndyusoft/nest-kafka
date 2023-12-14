@@ -520,7 +520,7 @@ export class UsersConsumer {
   })
   @UseFilters(
     new KafkaConsumerErrorTopicExceptionFilter({
-      topicPicker: (config: ConfigDto) => config.kafka.errorTopic,
+      errorTopicPicker: (config: ConfigDto) => config.kafka.errorTopic,
     }),
   )
   public async onMessage(): Promise<void> {
