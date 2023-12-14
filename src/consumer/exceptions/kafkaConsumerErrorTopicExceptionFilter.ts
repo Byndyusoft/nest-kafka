@@ -92,17 +92,31 @@ export class KafkaConsumerErrorTopicExceptionFilter
     context.kafkaConsumerMessageHandlerLogger.error(this.logger, exception);
 
     return from(
-      this.sendMessageToErrorTopic(
+      this.resendMessage(
         kafkaConsumerError,
         host,
         this.options.connectionName ?? context.connectionName,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        this.errorTopicPicker(...context.kafkaOptions.topicPickerArgs),
+        this.getTopicForResendMessage(context, kafkaConsumerError),
       ),
     );
   }
 
-  private async sendMessageToErrorTopic(
+  private getTopicForResendMessage(
+    context: IKafkaConsumerContext,
+    kafkaConsumerError: KafkaConsumerError,
+  ): string {
+    if (kafkaConsumerError.retriable && this.options.retryTopicPicker) {
+      return this.options.retryTopicPicker(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        ...context.kafkaOptions.topicPickerArgs,
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    return this.errorTopicPicker(...context.kafkaOptions.topicPickerArgs);
+  }
+
+  private async resendMessage(
     kafkaConsumerError: KafkaConsumerError,
     host: ArgumentsHost,
     connectionName: string,
@@ -114,7 +128,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     const cause = getErrorCause(kafkaConsumerError);
 
-    this.logger.warn("Send message to error topic");
+    this.logger.warn(`Send message to ${topic}`);
 
     await context.kafkaCoreProducer.send(connectionName, {
       topic,

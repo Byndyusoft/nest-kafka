@@ -531,6 +531,38 @@ export class UsersConsumer {
 
 </details>
 
+<details>
+<summary>3.3. <code>KafkaConsumerErrorTopicExceptionFilter</code> also support retry topic for retriable errors</summary>
+
+```typescript
+import {
+  KafkaConsumerErrorTopicExceptionFilter,
+  KafkaConsumerEventPattern,
+} from "@byndyusoft/nest-kafka";
+import { Controller, UseFilters } from "@nestjs/common";
+
+import { ConfigDto } from "~/src";
+
+@Controller()
+export class UsersConsumer {
+  @KafkaConsumerEventPattern({
+    topicPicker: (config: ConfigDto) => config.kafka.topic,
+    fromBeginning: true,
+  })
+  @UseFilters(
+    new KafkaConsumerErrorTopicExceptionFilter({
+      retryTopicPicker: (config: ConfigDto) => config.kafka.retryTopic,
+      errorTopicPicker: (config: ConfigDto) => config.kafka.errorTopic,
+    }),
+  )
+  public async onMessage(): Promise<void> {
+    throw new Error("some error");
+  }
+}
+```
+
+</details>
+
 ### Producing Messages
 
 </details>
