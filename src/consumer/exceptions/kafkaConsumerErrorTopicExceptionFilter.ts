@@ -42,7 +42,7 @@ import { DefaultRetryStrategy } from "../retryStrategies";
 export class KafkaConsumerErrorTopicExceptionFilter
   implements RpcExceptionFilter
 {
-  private readonly errorTopicPicker: (...args: any[]) => string;
+  private readonly errorTopicPicker: ((...args: any[]) => string) | false;
 
   private readonly logger = new Logger(
     KafkaConsumerErrorTopicExceptionFilter.name,
@@ -53,7 +53,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
   ) {
     const errorTopicPicker = options.errorTopicPicker ?? options.topicPicker;
 
-    if (!errorTopicPicker) {
+    if (errorTopicPicker === undefined) {
       throw new Error("errorTopicPicker must be defined");
     }
 
@@ -91,12 +91,18 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     context.kafkaConsumerMessageHandlerLogger.error(this.logger, exception);
 
+    const topic = this.getTopicForResendMessage(context, kafkaConsumerError);
+
+    if (topic === false) {
+      return throwError(() => kafkaConsumerError);
+    }
+
     return from(
       this.resendMessage(
         kafkaConsumerError,
         host,
         this.options.connectionName ?? context.connectionName,
-        this.getTopicForResendMessage(context, kafkaConsumerError),
+        topic,
       ),
     );
   }
@@ -104,16 +110,19 @@ export class KafkaConsumerErrorTopicExceptionFilter
   private getTopicForResendMessage(
     context: IKafkaConsumerContext,
     kafkaConsumerError: KafkaConsumerError,
-  ): string {
-    if (kafkaConsumerError.retriable && this.options.retryTopicPicker) {
-      return this.options.retryTopicPicker(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        ...context.kafkaOptions.topicPickerArgs,
-      );
+  ): string | false {
+    const topic =
+      kafkaConsumerError.retriable &&
+      typeof this.options.retryTopicPicker === "function"
+        ? this.options.retryTopicPicker
+        : this.errorTopicPicker;
+
+    if (!topic) {
+      return false;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return this.errorTopicPicker(...context.kafkaOptions.topicPickerArgs);
+    return topic(...context.kafkaOptions.topicPickerArgs);
   }
 
   private async resendMessage(

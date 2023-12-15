@@ -15,6 +15,8 @@
  */
 
 export interface IKafkaConsumerPayloadDecoderOptions {
+  readonly connectionName?: string;
+
   readonly key?: "string" | "json" | "schemaRegistry";
   readonly value?: "string" | "json" | "schemaRegistry";
   readonly headers?: "string";

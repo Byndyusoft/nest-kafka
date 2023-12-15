@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Byndyusoft
+ * Copyright 2023 Byndyusoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-export * from "./decorators";
-export * from "./errors";
-export * from "./exceptions";
-export * from "./interceptors";
-export * from "./interfaces";
-export * from "./kafkaConsumer";
-export * from "./kafkaConsumerMessageHandler";
-export * from "./kafkaConsumerMessageHandlerLogger";
-export * from "./kafkaRetryConsumer";
-export * from "./retryStrategies";
+import crypto from "crypto";
+
+import { EventPattern } from "@nestjs/microservices";
+
+import { KafkaRetryConsumerTransportId } from "../../consts";
+import { IKafkaConsumerOptions } from "../interfaces";
+
+export function KafkaRetryConsumerEventPattern(
+  options: IKafkaConsumerOptions,
+): MethodDecorator {
+  return EventPattern(
+    crypto.randomUUID(), // we don't use this arg, but we can't leave it empty
+    KafkaRetryConsumerTransportId,
+    options,
+  );
+}

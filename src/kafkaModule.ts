@@ -35,6 +35,7 @@ import {
   KafkaConsumer,
   KafkaConsumerMessageHandler,
   KafkaConsumerMessageHandlerLogger,
+  KafkaRetryConsumer,
 } from "./consumer";
 import { IKafkaOptions } from "./options";
 import {
@@ -60,6 +61,7 @@ export class KafkaModule {
       KafkaCoreProducer,
       KafkaCoreSchemaRegistry,
       KafkaProducer,
+      KafkaRetryConsumer,
       KafkaSchemaRegistry,
       ...kafkaProducerDecoratedProviders.createProviders(),
       ...kafkaSchemaRegistryDecoratedProviders.createProviders(),

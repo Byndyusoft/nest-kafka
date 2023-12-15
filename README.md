@@ -311,7 +311,7 @@ export class InfrastructureModule {
 <summary>5. Connect microservice to start consuming messages</summary>
 
 ```typescript
-import { KafkaConsumer } from "@byndyusoft/nest-kafka";
+import { KafkaConsumer, KafkaRetryConsumer } from "@byndyusoft/nest-kafka";
 import { MicroserviceOptions } from "@nestjs/microservices";
 
 async function bootstrap(): Promise<void> {
@@ -319,6 +319,11 @@ async function bootstrap(): Promise<void> {
 
   app.connectMicroservice<MicroserviceOptions>({
     strategy: app.get(KafkaConsumer),
+  });
+
+  // you can optionally connect retry consumer
+  app.connectMicroservice<MicroserviceOptions>({
+    strategy: app.get(KafkaRetryConsumer),
   });
 
   await app.startAllMicroservices();
@@ -557,6 +562,72 @@ export class UsersConsumer {
   )
   public async onMessage(): Promise<void> {
     throw new Error("some error");
+  }
+}
+```
+
+</details>
+
+<details>
+<summary>3.4. Use retry consumer to consume messages from retry topic</summary>
+
+```typescript
+import {
+  KafkaConsumerErrorTopicExceptionFilter,
+  KafkaConsumerEventPattern,
+} from "@byndyusoft/nest-kafka";
+import { Controller, UseFilters } from "@nestjs/common";
+
+import { ConfigDto } from "~/src";
+
+@Controller()
+export class UsersRetryConsumer {
+  @KafkaRetryConsumerEventPattern({
+    topicPicker: (config: ConfigDto) => config.kafka.retryTopic,
+    fromBeginning: true,
+  })
+  @UseFilters(
+    new KafkaConsumerErrorTopicExceptionFilter({
+      retryTopicPicker: false,
+      errorTopicPicker: (config: ConfigDto) => config.kafka.errorTopic,
+    }),
+  )
+  public async onMessage(): Promise<void> {
+    throw new Error("some error");
+  }
+}
+```
+
+Run retry consumer, e.g by HTTP:
+
+```typescript
+import { ApiTags } from "@byndyusoft/nest-swagger";
+import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+
+import { ApiCommonResponses } from "../infrastructure";
+
+import { RunDeliveryAppointmentsRetryConsumerOnceBodyDto } from "./dtos";
+import { RunDeliveryAppointmentsRetryConsumerOnceUseCase } from "./useCases";
+
+@ApiTags("Users")
+@Controller({
+  path: "/users/retry",
+  version: "1",
+})
+export class UsersRetryController {
+  public constructor(
+    private readonly config: ConfigDto,
+    private readonly kafkaRetryConsumer: KafkaRetryConsumer,
+  ) {}
+
+  @ApiCommonResponses(HttpStatus.BAD_REQUEST)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post("/runRetryConsumerOnce")
+  public runDeliveryAppointmentsRetryConsumerOnce(): Promise<void> {
+    await this.kafkaRetryConsumer.runOnce({
+      topic: config.kafka.retryTopic,
+      messagesCount: 1,
+    });
   }
 }
 ```
