@@ -113,7 +113,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
   ): string | false {
     const topic =
       kafkaConsumerError.retriable &&
-      typeof this.options.retryTopicPicker === "function"
+      this.options.retryTopicPicker !== undefined
         ? this.options.retryTopicPicker
         : this.errorTopicPicker;
 
