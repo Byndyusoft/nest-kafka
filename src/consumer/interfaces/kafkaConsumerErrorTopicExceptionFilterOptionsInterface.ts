@@ -19,5 +19,12 @@
 export interface IKafkaConsumerErrorTopicExceptionFilterOptions {
   readonly connectionName?: string;
 
-  readonly topicPicker: (...args: any[]) => string;
+  readonly retryTopicPicker?: ((...args: any[]) => string) | false;
+
+  readonly errorTopicPicker?: ((...args: any[]) => string) | false;
+
+  /**
+   * @deprecated Use errorTopicPicker instead
+   */
+  readonly topicPicker?: ((...args: any[]) => string) | false;
 }

@@ -57,25 +57,6 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
     );
   }
 
-  private static async decodeKeyOrValue(
-    { connectionName, kafkaCoreSchemaRegistry }: IKafkaConsumerContext,
-    data: Buffer | null,
-    decoder?: "string" | "json" | "schemaRegistry",
-  ): Promise<unknown | undefined> {
-    if (!data || !decoder) {
-      return undefined;
-    }
-
-    switch (decoder) {
-      case "string":
-        return data.toString();
-      case "json":
-        return JSON.parse(data.toString()) as unknown;
-      case "schemaRegistry":
-        return kafkaCoreSchemaRegistry.decode(connectionName, data);
-    }
-  }
-
   public async intercept(
     executionContext: ExecutionContext,
     next: CallHandler,
@@ -84,13 +65,13 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
     const context: IKafkaConsumerContext = rpcHost.getContext();
     const payload: IKafkaConsumerPayload = rpcHost.getData();
 
-    payload.key = await KafkaConsumerPayloadDecoder.decodeKeyOrValue(
+    payload.key = await this.decodeKeyOrValue(
       context,
       payload.rawPayload.message.key,
       this.options.key,
     );
 
-    payload.value = await KafkaConsumerPayloadDecoder.decodeKeyOrValue(
+    payload.value = await this.decodeKeyOrValue(
       context,
       payload.rawPayload.message.value,
       this.options.value,
@@ -102,5 +83,29 @@ export class KafkaConsumerPayloadDecoder implements NestInterceptor {
     );
 
     return next.handle();
+  }
+
+  private async decodeKeyOrValue(
+    {
+      connectionName: contextConnectionName,
+      kafkaCoreSchemaRegistry,
+    }: IKafkaConsumerContext,
+    data: Buffer | null,
+    decoder?: "string" | "json" | "schemaRegistry",
+  ): Promise<unknown | undefined> {
+    if (!data || !decoder) {
+      return undefined;
+    }
+
+    const connectionName = this.options.connectionName ?? contextConnectionName;
+
+    switch (decoder) {
+      case "string":
+        return data.toString();
+      case "json":
+        return JSON.parse(data.toString()) as unknown;
+      case "schemaRegistry":
+        return kafkaCoreSchemaRegistry.decode(connectionName, data);
+    }
   }
 }

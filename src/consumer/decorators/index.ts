@@ -17,4 +17,5 @@
 export * from "./kafkaConsumerEventPatternDecorator";
 export * from "./kafkaHeadersDecorator";
 export * from "./kafkaKeyDecorator";
+export * from "./kafkaRetryConsumerEventPatternDecorator";
 export * from "./kafkaValueDecorator";

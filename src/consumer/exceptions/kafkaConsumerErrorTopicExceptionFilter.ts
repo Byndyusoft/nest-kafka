@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   ArgumentsHost,
   Catch,
@@ -40,13 +42,23 @@ import { DefaultRetryStrategy } from "../retryStrategies";
 export class KafkaConsumerErrorTopicExceptionFilter
   implements RpcExceptionFilter
 {
+  private readonly errorTopicPicker: ((...args: any[]) => string) | false;
+
   private readonly logger = new Logger(
     KafkaConsumerErrorTopicExceptionFilter.name,
   );
 
   public constructor(
     private readonly options: IKafkaConsumerErrorTopicExceptionFilterOptions,
-  ) {}
+  ) {
+    const errorTopicPicker = options.errorTopicPicker ?? options.topicPicker;
+
+    if (errorTopicPicker === undefined) {
+      throw new Error("errorTopicPicker must be defined");
+    }
+
+    this.errorTopicPicker = errorTopicPicker;
+  }
 
   private static isExceptionRetriable(exception: unknown): boolean {
     return DefaultRetryStrategy.isRetriable(exception);
@@ -79,18 +91,41 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     context.kafkaConsumerMessageHandlerLogger.error(this.logger, exception);
 
+    const topic = this.getTopicForResendMessage(context, kafkaConsumerError);
+
+    if (topic === false) {
+      return throwError(() => kafkaConsumerError);
+    }
+
     return from(
-      this.sendMessageToErrorTopic(
+      this.resendMessage(
         kafkaConsumerError,
         host,
         this.options.connectionName ?? context.connectionName,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        this.options.topicPicker(...context.kafkaOptions.topicPickerArgs),
+        topic,
       ),
     );
   }
 
-  private async sendMessageToErrorTopic(
+  private getTopicForResendMessage(
+    context: IKafkaConsumerContext,
+    kafkaConsumerError: KafkaConsumerError,
+  ): string | false {
+    const topic =
+      kafkaConsumerError.retriable &&
+      this.options.retryTopicPicker !== undefined
+        ? this.options.retryTopicPicker
+        : this.errorTopicPicker;
+
+    if (!topic) {
+      return false;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    return topic(...context.kafkaOptions.topicPickerArgs);
+  }
+
+  private async resendMessage(
     kafkaConsumerError: KafkaConsumerError,
     host: ArgumentsHost,
     connectionName: string,
@@ -102,7 +137,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     const cause = getErrorCause(kafkaConsumerError);
 
-    this.logger.warn("Send message to error topic");
+    this.logger.warn(`Send message to ${topic}`);
 
     await context.kafkaCoreProducer.send(connectionName, {
       topic,

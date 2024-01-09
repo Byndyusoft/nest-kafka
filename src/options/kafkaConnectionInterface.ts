@@ -25,6 +25,8 @@ export interface IKafkaConnection {
 
   readonly consumer?: ConsumerConfig;
 
+  readonly retryConsumer?: ConsumerConfig;
+
   readonly producer?: ProducerConfig;
 
   readonly schemaRegistry?: IKafkaSchemaRegistryConnection;

@@ -19,5 +19,6 @@ export * from "./defaultConnectionName";
 export * from "./kafkaBaseOptionsToken";
 export * from "./kafkaConsumerTransportId";
 export * from "./kafkaOptionsToken";
+export * from "./kafkaRetryConsumerTransportId";
 export * from "./producersMapToken";
 export * from "./schemaRegistriesMapToken";
