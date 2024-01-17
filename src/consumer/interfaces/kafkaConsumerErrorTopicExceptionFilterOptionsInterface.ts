@@ -27,4 +27,9 @@ export interface IKafkaConsumerErrorTopicExceptionFilterOptions {
    * @deprecated Use errorTopicPicker instead
    */
   readonly topicPicker?: ((...args: any[]) => string) | false;
+
+  /**
+   * @default "original"
+   */
+  readonly resendHeadersPrefix?: string;
 }

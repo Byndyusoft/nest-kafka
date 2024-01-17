@@ -22,6 +22,7 @@ import {
   Logger,
   RpcExceptionFilter,
 } from "@nestjs/common";
+import { IHeaders } from "kafkajs";
 import { from, Observable, throwError } from "rxjs";
 
 import {
@@ -103,6 +104,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
         host,
         this.options.connectionName ?? context.connectionName,
         topic,
+        this.options.resendHeadersPrefix,
       ),
     );
   }
@@ -130,6 +132,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
     host: ArgumentsHost,
     connectionName: string,
     topic: string,
+    resendHeadersPrefix = "original",
   ): Promise<void> {
     const rpcHost = host.switchToRpc();
     const payload: IKafkaConsumerPayload = rpcHost.getData();
@@ -139,21 +142,23 @@ export class KafkaConsumerErrorTopicExceptionFilter
 
     this.logger.warn(`Send message to ${topic}`);
 
+    const headers: IHeaders = {
+      ...payload.rawPayload.message.headers,
+      [`${resendHeadersPrefix}Topic`]: payload.rawPayload.topic,
+      [`${resendHeadersPrefix}Partition`]: String(payload.rawPayload.partition),
+      [`${resendHeadersPrefix}Offset`]: payload.rawPayload.message.offset,
+      [`${resendHeadersPrefix}Timestamp`]: payload.rawPayload.message.timestamp,
+      [`${resendHeadersPrefix}TraceId`]: context.traceId,
+      error: JSON.stringify(serializeError(cause)),
+    };
+
     await context.kafkaCoreProducer.send(connectionName, {
       topic,
       messages: [
         {
           key: payload.rawPayload.message.key,
           value: payload.rawPayload.message.value,
-          headers: {
-            ...payload.rawPayload.message.headers,
-            originalTopic: payload.rawPayload.topic,
-            originalPartition: String(payload.rawPayload.partition),
-            originalOffset: payload.rawPayload.message.offset,
-            originalTimestamp: payload.rawPayload.message.timestamp,
-            originalTraceId: context.traceId,
-            error: JSON.stringify(serializeError(cause)),
-          },
+          headers,
         },
       ],
     });

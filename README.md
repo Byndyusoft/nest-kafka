@@ -590,6 +590,7 @@ export class UsersRetryConsumer {
     new KafkaConsumerErrorTopicExceptionFilter({
       retryTopicPicker: false,
       errorTopicPicker: (config: ConfigDto) => config.kafka.errorTopic,
+      resendHeadersPrefix: "retry",
     }),
   )
   public async onMessage(): Promise<void> {
