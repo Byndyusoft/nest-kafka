@@ -151,6 +151,7 @@ export class KafkaConsumerErrorTopicExceptionFilter
             originalPartition: String(payload.rawPayload.partition),
             originalOffset: payload.rawPayload.message.offset,
             originalTimestamp: payload.rawPayload.message.timestamp,
+            originalTraceId: context.traceId,
             error: JSON.stringify(serializeError(cause)),
           },
         },

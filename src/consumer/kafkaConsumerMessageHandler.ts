@@ -167,6 +167,7 @@ export class KafkaConsumerMessageHandler {
         kafkaConsumerMessageHandlerLogger:
           this.kafkaConsumerMessageHandlerLogger,
         isFinalAttempt,
+        traceId: rootSpan.context().toTraceId(),
       };
 
       const resultOrStream = await messageHandler(payload, context);
