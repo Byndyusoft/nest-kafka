@@ -29,4 +29,5 @@ export interface IKafkaConsumerContext {
   readonly kafkaConsumerMessageHandlerLogger: KafkaConsumerMessageHandlerLogger;
 
   readonly isFinalAttempt: boolean;
+  readonly traceId: string;
 }
