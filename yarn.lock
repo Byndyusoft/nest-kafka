@@ -502,7 +502,7 @@ __metadata:
     "@types/lodash": "npm:4.14.191"
     "@types/node": "npm:14.18.36"
     "@types/retry": "npm:^0.12.2"
-    axios: "npm:^0.27.2"
+    axios: "npm:^1.0.0"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.0"
     error-cause: "npm:^1.0.5"
@@ -2623,13 +2623,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.27.2":
-  version: 0.27.2
-  resolution: "axios@npm:0.27.2"
+"axios@npm:^1.0.0":
+  version: 1.6.5
+  resolution: "axios@npm:1.6.5"
   dependencies:
-    follow-redirects: "npm:^1.14.9"
+    follow-redirects: "npm:^1.15.4"
     form-data: "npm:^4.0.0"
-  checksum: 4cd898afe90caaf05307fc5a0da4c61012493b6bfd4937fff9774455c01d368db583b17c4737e73853f149b32e615487930b491661682a1f69a1973b1f533bb7
+    proxy-from-env: "npm:^1.1.0"
+  checksum: eca0e65d8fc1dc447c73763019cc918cc4451983ee4198c3739ecdb85a6539d7b6708d2e823aca2191687f6278e8e67b1e3790a275736f9f697fd08941725195
   languageName: node
   linkType: hard
 
@@ -4678,13 +4679,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.9":
-  version: 1.15.2
-  resolution: "follow-redirects@npm:1.15.2"
+"follow-redirects@npm:^1.15.4":
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 930171f8b81bf00e9368df4b17f3b835934762d51192632af53a51a8a608d5510a1ffbc6da5761dce9996cdbd750740490ca844320e5ff11cdaf2329a5a69647
+  checksum: 4307a49f63724a0d72626765083b02ed7e286dedd68432d789f45307e2f2f8a115588febd634922ba5f22ba63778c0010eb8958bad48697c4ef49427f23f6822
   languageName: node
   linkType: hard
 
@@ -8568,6 +8569,13 @@ __metadata:
     pbjs: bin/pbjs
     pbts: bin/pbts
   checksum: 5a7a343bc1f4029022433690e9a1734a89a80fc441b580ddc8486262417b7755bddafd637a88c0f8105e594e361a02218508df67caf1ac9c18bbca82e6ab60ee
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: 0bba2ef7c8374b384e94e4477764e53df66fcdfa7d19e2c4a063cb39eea979c139ce13981970223665422e72b7d149609a927046e2e40ab340b84d91af082591
   languageName: node
   linkType: hard
 
