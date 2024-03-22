@@ -525,7 +525,7 @@ __metadata:
     ts-jest: "npm:29.0.3"
     ts-patch: "npm:2.1.0"
     tslib: "npm:^2.4.1"
-    typescript: "npm:4.9.4"
+    typescript: "npm:5.4.3"
     typescript-transform-paths: "npm:3.4.6"
   peerDependencies:
     "@byndyusoft/class-validator-extended": ^1.0.1
@@ -10120,7 +10120,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.4, typescript@npm:^4.6.4":
+"typescript@npm:5.4.3":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: f0de84fbdc8870650754d43c02b5c1db355f6e87848c3aac1d68299e0ecdf6ec392435030566353b20dad153ec3a61220899d8c1b9baf919087ff74a182c87a7
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^4.6.4":
   version: 4.9.4
   resolution: "typescript@npm:4.9.4"
   bin:
@@ -10130,7 +10140,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=ad5954"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 9772402cc823a92011b7e1feddc0c6abd0c6f3313ebdcfe9011248aae10a4582887f6d637e628abef309166593c3b5c1781df722adc91694c6fc08553cf2d67b
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^4.6.4#optional!builtin<compat/typescript>":
   version: 4.9.4
   resolution: "typescript@patch:typescript@npm%3A4.9.4#optional!builtin<compat/typescript>::version=4.9.4&hash=ad5954"
   bin:
