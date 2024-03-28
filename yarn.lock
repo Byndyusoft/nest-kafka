@@ -495,8 +495,8 @@ __metadata:
     "@commitlint/cli": "npm:17.4.1"
     "@commitlint/config-conventional": "npm:17.4.0"
     "@kafkajs/confluent-schema-registry": "npm:3.3.0"
-    "@nestjs/common": "npm:9.2.1"
-    "@nestjs/microservices": "npm:9.2.1"
+    "@nestjs/common": "npm:10.3.6"
+    "@nestjs/microservices": "npm:10.3.6"
     "@types/error-cause": "npm:^1.0.1"
     "@types/jest": "npm:29.2.5"
     "@types/lodash": "npm:4.14.191"
@@ -532,8 +532,8 @@ __metadata:
     "@byndyusoft/nest-opentracing": ^2.3.2
     "@byndyusoft/nest-pino": ^3.1.2-1
     "@kafkajs/confluent-schema-registry": ^3.3.0
-    "@nestjs/common": ^8.0.0 || ^9.0.0
-    "@nestjs/microservices": ^8.0.0 || ^9.0.0
+    "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
+    "@nestjs/microservices": ^8.0.0 || ^9.0.0 || ^10.0.0
     class-transformer: ^0.5.1
     class-validator: ^0.14.0
     kafkajs: ^2.2.3
@@ -1174,41 +1174,45 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:9.2.1":
-  version: 9.2.1
-  resolution: "@nestjs/common@npm:9.2.1"
+"@lukeed/csprng@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "@lukeed/csprng@npm:1.1.0"
+  checksum: 2529a7262c907f400543198976ff7c5902bac5721d05fd8db9b70ce775cb9bacc59786865a4168c0de0ebe068f8eec6818d491e797d51eaf128684a56323f563
+  languageName: node
+  linkType: hard
+
+"@nestjs/common@npm:10.3.6":
+  version: 10.3.6
+  resolution: "@nestjs/common@npm:10.3.6"
   dependencies:
     iterare: "npm:1.2.1"
-    tslib: "npm:2.4.1"
-    uuid: "npm:9.0.0"
+    tslib: "npm:2.6.2"
+    uid: "npm:2.0.2"
   peerDependencies:
-    cache-manager: <=5
     class-transformer: "*"
     class-validator: "*"
-    reflect-metadata: ^0.1.12
+    reflect-metadata: ^0.1.12 || ^0.2.0
     rxjs: ^7.1.0
   peerDependenciesMeta:
-    cache-manager:
-      optional: true
     class-transformer:
       optional: true
     class-validator:
       optional: true
-  checksum: c44f404ec401c87de2a45fea45900efc8f4b6c55355a917883939806ea173707fb3438a3f384d343ac82d46f177dc80a3f8300c431a38864f898a275ac0a743f
+  checksum: c64bbaf7b2268b0f0f75abd9f845a639c5fb4b2d426742420d7f9b1816a8362d43494333d8f131b013e9e10efdda8d68ee6e296a1bba61918f36dcd90cfd2f9d
   languageName: node
   linkType: hard
 
-"@nestjs/microservices@npm:9.2.1":
-  version: 9.2.1
-  resolution: "@nestjs/microservices@npm:9.2.1"
+"@nestjs/microservices@npm:10.3.6":
+  version: 10.3.6
+  resolution: "@nestjs/microservices@npm:10.3.6"
   dependencies:
     iterare: "npm:1.2.1"
-    tslib: "npm:2.4.1"
+    tslib: "npm:2.6.2"
   peerDependencies:
     "@grpc/grpc-js": "*"
-    "@nestjs/common": ^9.0.0
-    "@nestjs/core": ^9.0.0
-    "@nestjs/websockets": ^9.0.0
+    "@nestjs/common": ^10.0.0
+    "@nestjs/core": ^10.0.0
+    "@nestjs/websockets": ^10.0.0
     amqp-connection-manager: "*"
     amqplib: "*"
     cache-manager: "*"
@@ -1216,7 +1220,7 @@ __metadata:
     kafkajs: "*"
     mqtt: "*"
     nats: "*"
-    reflect-metadata: ^0.1.12
+    reflect-metadata: ^0.1.12 || ^0.2.0
     rxjs: ^7.1.0
   peerDependenciesMeta:
     "@grpc/grpc-js":
@@ -1237,7 +1241,7 @@ __metadata:
       optional: true
     nats:
       optional: true
-  checksum: 0f29738a661d1216ab0273411dcaab1157244bc8666a3fb045b4246b8eb65550846a74aaec098309e182aaa911bada2ffb702246aff8cdd18b7950b607626d88
+  checksum: a9cf5a05748bbfeb49b89a3ddb213f170ee955aafe84c131739fc07e151e19edd7afa8c08d16a3a35b8947cb2765ec850fa248dc502317f4135f696e7ec9cc83
   languageName: node
   linkType: hard
 
@@ -10001,10 +10005,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.4.1, tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "tslib@npm:2.4.1"
-  checksum: a739a21e3ff059e62c7c3c0845333fbc9c081bcc91e015f2d246a31eeaf1fb0e29b10c0913c7d22f692b3203bb469fd60ca5288aa4f27d351a969df2d0714899
+"tslib@npm:2.6.2":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: e5654691294dfbc49d7f37c8476b11a90ab8a0af4ad8cc968af1d013600e84ecfcd9a68e1cb89f5dcfe5c88872e3fbacea830d237cfa063498115a88f4bd2de6
   languageName: node
   linkType: hard
 
@@ -10012,6 +10016,13 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 441af59dc42ad4ae57140e62cb362369620c6076845c2c2b0ecc863c1d719ce24fdbc301e9053433fef43075e061bf84b702318ff1204b496a5bba10baf9eb9f
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "tslib@npm:2.4.1"
+  checksum: a739a21e3ff059e62c7c3c0845333fbc9c081bcc91e015f2d246a31eeaf1fb0e29b10c0913c7d22f692b3203bb469fd60ca5288aa4f27d351a969df2d0714899
   languageName: node
   linkType: hard
 
@@ -10156,6 +10167,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uid@npm:2.0.2":
+  version: 2.0.2
+  resolution: "uid@npm:2.0.2"
+  dependencies:
+    "@lukeed/csprng": "npm:^1.0.0"
+  checksum: ff7fd6551b61a43f0c197a3b69c3ba610e0ff02e74f0e07b702a41854fa2e29268a24c992345e8d31dfe0f74576f9861c17571377108bb88dd69e4057259bbd5
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2
   resolution: "unbox-primitive@npm:1.0.2"
@@ -10243,15 +10263,6 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 6a88ed8344d07f2324b304ee36def365d967953b5a9c15baa3213eb3909e86a7da1ee70a4c2133e80c23d6c1987590e9c3c57d874e20a124f9e41620b462fa57
-  languageName: node
-  linkType: hard
-
-"uuid@npm:9.0.0":
-  version: 9.0.0
-  resolution: "uuid@npm:9.0.0"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: e1f76aff372e430bb129157360fd4cd3b393411b245604ea78e178a822ab7874ec2ebecec03ce94422b0b80bbd24733c6fa1df166c9cbad5086ef4b4843140bb
   languageName: node
   linkType: hard
 
