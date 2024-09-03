@@ -329,6 +329,8 @@ async function bootstrap(): Promise<void> {
   await app.startAllMicroservices();
 
   // ...
+
+  await app.listen(...)
 }
 
 // ...
@@ -337,6 +339,9 @@ async function bootstrap(): Promise<void> {
 </details>
 
 ### Consuming Messages
+
+> [!IMPORTANT]
+> Put `app.startAllMicroservices()` after your `app.listen(...)`
 
 </details>
 
