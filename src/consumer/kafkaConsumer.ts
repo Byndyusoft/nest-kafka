@@ -18,7 +18,7 @@
 
 import vm from "vm";
 
-import { Inject, Injectable, OnApplicationBootstrap } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import {
   CustomTransportStrategy,
   MessageHandler,
@@ -37,10 +37,7 @@ import { IKafkaConsumerSerializedOptions } from "./interfaces";
 import { KafkaConsumerMessageHandler } from "./kafkaConsumerMessageHandler";
 
 @Injectable()
-export class KafkaConsumer
-  extends Server
-  implements CustomTransportStrategy, OnApplicationBootstrap
-{
+export class KafkaConsumer extends Server implements CustomTransportStrategy {
   public readonly transportId = KafkaConsumerTransportId;
 
   private readonly messageHandlersMap: Map<
@@ -57,6 +54,7 @@ export class KafkaConsumer
   ) {
     super();
   }
+
   public async close(): Promise<void> {
     await Promise.all(
       [...this.consumersMap.values()].map((x) => x.disconnect()),
@@ -64,11 +62,7 @@ export class KafkaConsumer
   }
 
   public listen(callback: (error?: unknown) => void): void {
-    this.connectAndSubscribe().then(callback).catch(callback);
-  }
-
-  public async onApplicationBootstrap(): Promise<void> {
-    await this.startProcessingMessages();
+    this.start().then(callback).catch(callback);
   }
 
   private addMessageHandlerToMap(
@@ -87,12 +81,6 @@ export class KafkaConsumer
     }
   }
 
-  private async connectAndSubscribe(): Promise<void> {
-    await Promise.all([...this.consumersMap.values()].map((x) => x.connect()));
-
-    await this.subscribe();
-  }
-
   private getConsumer(connectionName: string): Consumer {
     const consumer = this.consumersMap.get(connectionName);
 
@@ -105,7 +93,7 @@ export class KafkaConsumer
     return consumer;
   }
 
-  private async startProcessingMessages(): Promise<void> {
+  private async run(): Promise<void> {
     for (const [connectionName, consumer] of this.consumersMap) {
       await consumer.run({
         eachMessage: async (rawPayload) => {
@@ -121,6 +109,13 @@ export class KafkaConsumer
         },
       });
     }
+  }
+
+  private async start(): Promise<void> {
+    await Promise.all([...this.consumersMap.values()].map((x) => x.connect()));
+
+    await this.subscribe();
+    await this.run();
   }
 
   private async subscribe(): Promise<void> {
