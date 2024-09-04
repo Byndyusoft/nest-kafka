@@ -17,7 +17,7 @@
 import {
   Inject,
   Injectable,
-  OnModuleDestroy,
+  OnApplicationShutdown,
   OnModuleInit,
 } from "@nestjs/common";
 import { Producer } from "kafkajs";
@@ -25,13 +25,13 @@ import { Producer } from "kafkajs";
 import { ProducersMapToken } from "../consts";
 
 @Injectable()
-export class KafkaCoreProducer implements OnModuleInit, OnModuleDestroy {
+export class KafkaCoreProducer implements OnModuleInit, OnApplicationShutdown {
   public constructor(
     @Inject(ProducersMapToken)
     private readonly producersMap: Map<string, Producer>,
   ) {}
 
-  public async onModuleDestroy(): Promise<void> {
+  public async onApplicationShutdown(): Promise<void> {
     await Promise.all(
       [...this.producersMap.values()].map((x) => x.disconnect()),
     );
