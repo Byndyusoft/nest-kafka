@@ -326,11 +326,12 @@ async function bootstrap(): Promise<void> {
     strategy: app.get(KafkaRetryConsumer),
   });
 
+  // Put `app.listen(...)` before `app.startAllMicroservice()`
+  await app.listen(...)
+
   await app.startAllMicroservices();
 
   // ...
-
-  await app.listen(...)
 }
 
 // ...
