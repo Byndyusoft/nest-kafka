@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
+import { TracingService } from "@byndyusoft/nest-opentracing";
 import { SchemaRegistry } from "@kafkajs/confluent-schema-registry";
-import { Injectable, Scope } from "@nestjs/common";
+import { Inject, Injectable, Scope } from "@nestjs/common";
 
+import { KafkaBaseOptionsToken } from "../consts";
 import { IDecoratedProvider } from "../decoratedProviders";
+import { IKafkaOptions } from "../options";
 
 import { KafkaCoreSchemaRegistry } from "./kafkaCoreSchemaRegistry";
-
 @Injectable({ scope: Scope.TRANSIENT })
 export class KafkaSchemaRegistry implements IDecoratedProvider {
   private connectionNameValue?: string;
 
   public constructor(
     private readonly kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
+    private readonly tracingService: TracingService,
+    @Inject(KafkaBaseOptionsToken)
+    private readonly kafkaOptions: IKafkaOptions,
   ) {}
 
   public get connectionName(): string {
@@ -52,6 +57,15 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
   public encode(
     ...args: Parameters<SchemaRegistry["encode"]>
   ): ReturnType<SchemaRegistry["encode"]> {
+    const span = this.tracingService.getRootSpan();
+    const [, payload] = args as [number, Record<string, unknown>];
+
+    for (const key of this.kafkaOptions.traceMessageKeys!) {
+      if (key in payload) {
+        span.setTag(key, payload[key]);
+      }
+    }
+
     return this.kafkaCoreSchemaRegistry.encode(this.connectionName, ...args);
   }
 

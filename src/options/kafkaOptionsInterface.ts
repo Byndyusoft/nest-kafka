@@ -26,4 +26,6 @@ export interface IKafkaOptions {
   readonly topicPickerArgs: any[];
 
   readonly consumerRetryOptions?: WrapOptions;
+
+  readonly traceMessageKeys?: string[];
 }
