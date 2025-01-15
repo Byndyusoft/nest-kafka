@@ -189,6 +189,8 @@ import { ConfigDto } from "./config";
           },
         ],
         topicPickerArgs: [config],
+        // You can set business keys from the message you are sending that will be included in the tracing
+        traceMessageKeys: ["businessKey1", "businessKey2"],
       }),
     }),
     // ...
@@ -255,6 +257,8 @@ import { ConfigDto } from "./config";
           },
         ],
         topicPickerArgs: [config],
+        // You can set business keys from the message you are sending that will be included in the tracing
+        traceMessageKeys: ["businessKey1", "businessKey2"],
       }),
     }),
     // ...
@@ -295,6 +299,8 @@ import { ConfigDto } from "./config";
           },
         ],
         topicPickerArgs: [config],
+        // You can set business keys from the message you are sending that will be included in the tracing
+        traceMessageKeys: ["businessKey1", "businessKey2"],
       }),
     }),
     // ...
