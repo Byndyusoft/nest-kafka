@@ -57,12 +57,14 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
   public encode(
     ...args: Parameters<SchemaRegistry["encode"]>
   ): ReturnType<SchemaRegistry["encode"]> {
-    const span = this.tracingService.getRootSpan();
-    const [, payload] = args as [number, Record<string, unknown>];
+    if (this.kafkaOptions.traceMessageKeys) {
+      const span = this.tracingService.getRootSpan();
+      const [, payload] = args as [number, Record<string, unknown>];
 
-    for (const key of this.kafkaOptions.traceMessageKeys!) {
-      if (key in payload) {
-        span.setTag(key, payload[key]);
+      for (const key of this.kafkaOptions.traceMessageKeys) {
+        if (key in payload) {
+          span.setTag(key, payload[key]);
+        }
       }
     }
 
