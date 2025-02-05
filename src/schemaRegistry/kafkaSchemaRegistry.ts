@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { PinoLogger } from "@byndyusoft/nest-pino";
 import { SchemaRegistry } from "@kafkajs/confluent-schema-registry";
 import { Injectable, Scope } from "@nestjs/common";
 
@@ -27,6 +28,7 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
 
   public constructor(
     private readonly kafkaCoreSchemaRegistry: KafkaCoreSchemaRegistry,
+    private readonly logger: PinoLogger,
   ) {}
 
   public get connectionName(): string {
@@ -46,12 +48,18 @@ export class KafkaSchemaRegistry implements IDecoratedProvider {
   public decode(
     ...args: Parameters<SchemaRegistry["decode"]>
   ): ReturnType<SchemaRegistry["decode"]> {
-    return this.kafkaCoreSchemaRegistry.decode(this.connectionName, ...args);
+    const result = this.kafkaCoreSchemaRegistry.decode(this.connectionName, ...args);
+    this.logger.setContext(`${KafkaSchemaRegistry.name}.decode`)
+    this.logger.trace(result)
+    return result
   }
 
   public encode(
     ...args: Parameters<SchemaRegistry["encode"]>
   ): ReturnType<SchemaRegistry["encode"]> {
+    const [, payload] = args as [number, Record<string, unknown>];
+    this.logger.setContext(`${KafkaSchemaRegistry.name}.encode`)
+    this.logger.trace(payload)
     return this.kafkaCoreSchemaRegistry.encode(this.connectionName, ...args);
   }
 
