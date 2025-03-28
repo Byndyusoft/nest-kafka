@@ -509,7 +509,7 @@ __metadata:
     eslint: "npm:8.31.0"
     husky: "npm:8.0.3"
     jest: "npm:29.3.1"
-    jest-extended: "npm:3.2.2"
+    jest-extended: "npm:4.0.2"
     kafkajs: "npm:2.2.3"
     lint-staged: "npm:13.1.0"
     lodash: "npm:^4.17.21"
@@ -6099,9 +6099,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-extended@npm:3.2.2":
-  version: 3.2.2
-  resolution: "jest-extended@npm:3.2.2"
+"jest-extended@npm:4.0.2":
+  version: 4.0.2
+  resolution: "jest-extended@npm:4.0.2"
   dependencies:
     jest-diff: "npm:^29.0.0"
     jest-get-type: "npm:^29.0.0"
@@ -6110,7 +6110,7 @@ __metadata:
   peerDependenciesMeta:
     jest:
       optional: true
-  checksum: d844db740b1996bb1f1971997a9366903e18f9bee5fc1de4354e5e2605e444afd3cc6d3317cbd5a1a538c59e375f488f5f7b06da2e09248df327505e0bf88b5b
+  checksum: 43fdd305f0ac5e58f5c842b6633e11161217648ebecb947146fe9756ad5131a5b7d01571919ac432024085b27ec4e3a71d17869a692f69c1e73f1903dce10789
   languageName: node
   linkType: hard
 
