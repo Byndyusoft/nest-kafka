@@ -78,7 +78,7 @@
     "@byndyusoft/eslint-config": "2.2.1",
     "@byndyusoft/nest-opentracing": "2.3.2",
     "@byndyusoft/nest-pino": "3.1.2-1",
-    "@byndyusoft/tsconfig": "1.2.0",
+    "@byndyusoft/tsconfig": "2.2.0",
     "@commitlint/cli": "17.4.1",
     "@commitlint/config-conventional": "17.4.0",
     "@kafkajs/confluent-schema-registry": "3.3.0",
