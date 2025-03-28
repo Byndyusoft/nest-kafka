@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
+import { Span, TracingService } from "@byndyusoft/nest-opentracing";
 import {
   Inject,
   Injectable,
   OnApplicationShutdown,
   OnModuleInit,
 } from "@nestjs/common";
-import { Producer } from "kafkajs";
+import {
+  Producer,
+  ProducerRecord,
+  RecordMetadata,
+  TopicMessages,
+} from "kafkajs";
 
 import { ProducersMapToken } from "../consts";
 
@@ -29,6 +35,7 @@ export class KafkaCoreProducer implements OnModuleInit, OnApplicationShutdown {
   public constructor(
     @Inject(ProducersMapToken)
     private readonly producersMap: Map<string, Producer>,
+    private readonly tracingService: TracingService,
   ) {}
 
   public async onApplicationShutdown(): Promise<void> {
@@ -45,14 +52,41 @@ export class KafkaCoreProducer implements OnModuleInit, OnApplicationShutdown {
     connectionName: string,
     ...args: Parameters<Producer["send"]>
   ): ReturnType<Producer["send"]> {
-    return this.getProducer(connectionName).send(...args);
+    return this.tracingService.traceAsyncFunction(
+      "kafka",
+      async (span: Span) => {
+        const result = await this.getProducer(connectionName).send(...args);
+
+        this.startChildSpan(span, args, connectionName, result);
+
+        return result;
+      },
+    );
   }
 
   public sendBatch(
     connectionName: string,
     ...args: Parameters<Producer["sendBatch"]>
   ): ReturnType<Producer["sendBatch"]> {
-    return this.getProducer(connectionName).sendBatch(...args);
+    return this.tracingService.traceAsyncFunction(
+      "kafka",
+      async (span: Span) => {
+        const result = await this.getProducer(connectionName).sendBatch(
+          ...args,
+        );
+
+        for (const argumentX of Object.values(args)) {
+          this.startChildSpan(
+            span,
+            argumentX.topicMessages!,
+            connectionName,
+            result,
+          );
+        }
+
+        return result;
+      },
+    );
   }
 
   private getProducer(connectionName: string): Producer {
@@ -65,5 +99,45 @@ export class KafkaCoreProducer implements OnModuleInit, OnApplicationShutdown {
     }
 
     return producer;
+  }
+
+  private startChildSpan(
+    span: Span,
+    args: [record: ProducerRecord] | TopicMessages[],
+    connectionName: string,
+    result: RecordMetadata[],
+  ): void {
+    span.addTags({
+      "connection.name": connectionName,
+      "topic.count": args.length,
+    });
+
+    for (const [_, argument] of args.entries()) {
+      const topicSpan = span
+        .tracer()
+        .startSpan(`kafka.topic.${argument.topic}`, {
+          childOf: span,
+        });
+
+      topicSpan.addTags({
+        "connection.name": connectionName,
+        topic: argument.topic,
+      });
+
+      if (result.length === args.length) {
+        topicSpan.addTags({
+          partitions:
+            result.length === args.length ? result[_].partition : null,
+          "base.offset":
+            result.length === args.length ? result[_].baseOffset : null,
+        });
+      }
+
+      for (const message of argument.messages) {
+        topicSpan.setTag("message.key", message.key);
+      }
+
+      topicSpan.finish();
+    }
   }
 }
