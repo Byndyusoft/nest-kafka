@@ -516,7 +516,7 @@ __metadata:
     markdownlint-cli: "npm:0.33.0"
     pino: "npm:8.8.0"
     pinst: "npm:3.0.0"
-    prettier: "npm:2.8.2"
+    prettier: "npm:3.5.3"
     prettier-plugin-packagejson: "npm:2.3.0"
     retry: "npm:^0.13.1"
     rxjs: "npm:7.8.0"
@@ -8490,12 +8490,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:2.8.2":
-  version: 2.8.2
-  resolution: "prettier@npm:2.8.2"
+"prettier@npm:3.5.3":
+  version: 3.5.3
+  resolution: "prettier@npm:3.5.3"
   bin:
-    prettier: bin-prettier.js
-  checksum: a03ed99722f92e36e5c63b5dd5008d2b3d8d25d26c2894d3fd9a2bd887265af753af94c532990c3509711c74270df0b31f3c22110d5cc19ae3f0ee85079fb57b
+    prettier: bin/prettier.cjs
+  checksum: 055cd0210ac1a23c36fc5169437220a6965af98b49743174ca5bfde6c4e345f7dcc4e4e2ba82539b0574f4d25417c8afbe11f4099a137421503ed1aafd49bf45
   languageName: node
   linkType: hard
 
