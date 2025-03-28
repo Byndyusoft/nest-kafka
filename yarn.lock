@@ -491,7 +491,7 @@ __metadata:
     "@byndyusoft/nest-dynamic-module": "npm:^1.0.0"
     "@byndyusoft/nest-opentracing": "npm:2.3.2"
     "@byndyusoft/nest-pino": "npm:3.1.2-1"
-    "@byndyusoft/tsconfig": "npm:1.2.0"
+    "@byndyusoft/tsconfig": "npm:2.2.0"
     "@commitlint/cli": "npm:17.4.1"
     "@commitlint/config-conventional": "npm:17.4.0"
     "@kafkajs/confluent-schema-registry": "npm:3.3.0"
@@ -570,15 +570,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@byndyusoft/tsconfig@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@byndyusoft/tsconfig@npm:1.2.0"
+"@byndyusoft/tsconfig@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@byndyusoft/tsconfig@npm:2.2.0"
   dependencies:
-    "@tsconfig/node12": "npm:^1.0.7"
-    "@tsconfig/node14": "npm:^1.0.0"
-    "@tsconfig/node16": "npm:^1.0.1"
+    "@tsconfig/node16": "npm:^1.0.3"
     "@tsconfig/node18": "npm:^1.0.1"
-  checksum: 8f5e4a164c6910ac151bc485e8be4670b82514aa205a7a252e219909fe6045d55959dd0abcb75d8615d086fe34318fee1aa2dc31d0badd6ae87201d701385dcb
+    "@tsconfig/node20": "npm:^20.1.4"
+    "@tsconfig/node22": "npm:^22.0.0"
+  checksum: 9198a961d1c1cfaef6169bda9213fa0f96503d41464c576d6b7d6839f4f66e400de4f47f6f974539fea13592576361a2634d19e6f7aee341323ce970dccde580
   languageName: node
   linkType: hard
 
@@ -1843,10 +1843,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node16@npm:^1.0.1, @tsconfig/node16@npm:^1.0.2":
+"@tsconfig/node16@npm:^1.0.2":
   version: 1.0.3
   resolution: "@tsconfig/node16@npm:1.0.3"
   checksum: 4280081089783dfeab00e5bc18ff55e11e8e4577d4626f34730a062c99ec4136fe6c2036e6f20ebe50b1c3e01bc29db6e2cfa9541a7b6dc99825ccbe8f7f8395
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node16@npm:^1.0.3":
+  version: 1.0.4
+  resolution: "@tsconfig/node16@npm:1.0.4"
+  checksum: d75e4f7d3edd74305383430d1fc9fd9bdf9af7fb2387853e6c06660a5325da6bce90846b853f5c69ec70b4e34de9ab05d508c9dc11c95a28ebbb000fc52b963b
   languageName: node
   linkType: hard
 
@@ -1854,6 +1861,20 @@ __metadata:
   version: 1.0.1
   resolution: "@tsconfig/node18@npm:1.0.1"
   checksum: ec5a7916499125fbd4ea671e542fd5c3f66d5eda91a60e1f8b8beb5218c3ac780020f82b43d6e683ee09923f3ea3ee62e828626edaa10652e10c032ac716c47d
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node20@npm:^20.1.4":
+  version: 20.1.5
+  resolution: "@tsconfig/node20@npm:20.1.5"
+  checksum: e94211e2634cb1e19e1e0c3d7826dfeeb6f9c87b0017337d5b095c34a4916ceddd5e86f55ee6ad8734ac5ff0dfde7c8775887697fb69b87850577a4a6a7e2df7
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node22@npm:^22.0.0":
+  version: 22.0.1
+  resolution: "@tsconfig/node22@npm:22.0.1"
+  checksum: 5bdc503656347cfcd17dfe71ebf411817941c159f9c3ac921d1504a138e651bd6d83550cfed6ea2a2b91303bc2b0fb23025a24861813cdb3571cc85267ccc999
   languageName: node
   linkType: hard
 
