@@ -75,7 +75,7 @@
   },
   "devDependencies": {
     "@byndyusoft/class-validator-extended": "1.0.1",
-    "@byndyusoft/eslint-config": "2.2.1",
+    "@byndyusoft/eslint-config": "3.0.1",
     "@byndyusoft/nest-opentracing": "2.3.2",
     "@byndyusoft/nest-pino": "3.1.2-1",
     "@byndyusoft/tsconfig": "1.2.0",
